@@ -6,7 +6,12 @@
     </head>
     <body>
         <div class="mainContainer">
-            <p>this is home brother!!</p>
+            <p>this is Home</p>
+            <p>Click <a href="/logout">here</a> to logout.</p>
+
+            <p align="center">{% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}<p>
         </div>
     </body>
 </html>

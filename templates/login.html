@@ -28,8 +28,14 @@
 				</form>
 
 				{% if error %}
-        		<p class="error"><strong>Error:</strong> {{ error }}</p>
+        		<p class="error" align="center"><strong>Error:</strong> {{ error }}
       			{% endif %}
+      			</p>
+      			<p class="flash_msg">
+      				{% for message in 	get_flashed_messages() %}
+        			{{ message }}
+      				{% endfor %}
+      			</p>
 
 			</div>
 		</div>
