@@ -1,0 +1,25 @@
+# MS_FPN_MASTER
+
+
+# MS_PO_MASTER
+
+create table MS_PO_MASTER(srno integer,resource_name char,vendor char,month datetime,no_of_days integer,leaves_taken integer,billed_days integer,rate_type varchar,billing_rate float,billable_amount float,gst float,total float,fpn varchar,porf text,project text,resource varchar,date_raised datetime,pono varchar,invoice_no varchar,golive_date datetime);
+
+# MS_EMP_MASTER
+
+create table MS_EMP_MASTER(srno integer,emp_code varchar,emp_name char,vendor char,joining_date datetime,rate float,status char,manager varchar);
+
+# MS_HOLIDAY_MASTER
+
+create table MS_HOLIDAY_MASTER(srno integer,date datetime,reason text);
+
+
+# TXN_ATTENDENCE_REPORT
+
+create table TXN_ATTENDENCE_REPORT(srno integer,emp_code varchar,emp_name char,login_date datetime,login_time text,logout_time text,status varchar,reason varchar,supervisor_code varchar,branch_code varchar,branch_name varchar,department text,mobile_no integer,mailid text,cost_code integer,time text);
+
+
+# TXN_ATTENDENCE_SUMMARY
+
+create table TXN_ATENDENCE_SUMMARY(srno integer,emp_code varchar,emp_name char,month_year text,half_day varchar,holiday varchar,not_reported varchar,system_logout varchar,second_saturday varchar,fourth_saturday varchar,present varchar);
+
