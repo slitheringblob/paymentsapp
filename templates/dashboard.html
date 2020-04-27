@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VPT-Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/dashboard">Vendor Payment Tracker</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/dashboard">Dashboard</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/addnewpo">Add new PO</a></li>
+          <li><a href="/addnewfpn">Add new FPN</a></li>
+          <li><a href="/addnewholiday">Add new Holiday</a></li>
+          <li><a href="/addnewemployee">Add new Employee</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">View
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">View new PO</a></li>
+          <li><a href="#">View new FPN</a></li>
+          <li><a href="#">View new Holiday</a></li>
+          <li><a href="#">View new Employee</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Update new PO</a></li>
+          <li><a href="#">Update new FPN</a></li>
+          <li><a href="#">Update new Holiday</a></li>
+          <li><a href="#">Update new Employee</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout">LogOut</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-4">.col-sm-4</div>
+		<div class="col-sm-4">.col-sm-4</div>
+		<div class="col-sm-4">.col-sm-4</div>
+
+	</div>
+</div>
+
+
+
+
+</body>
+</html>

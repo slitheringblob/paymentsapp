@@ -1,5 +1,6 @@
 # MS_FPN_MASTER
 
+create table MS_FPN_MASTER(srno integer,fpn varchar,fpn_description varchar,resource_duration text,amount float,vendor char,opening_balance float,amount_utilized float,remaining_amount float,go_live datetime,remarks varchar);
 
 # MS_PO_MASTER
 
