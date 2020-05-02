@@ -1,68 +1,153 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>VPT-Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/static/bootstrap.min.js"></script>
-</head>
-<body>
+{% extends 'layout.html' %}
 
+{% block content %}
 
-<nav class="navbar navbar-inverse bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/dashboard">Vendor Payment Tracker</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/dashboard">Dashboard</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="">Add
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/addnewpo">Add new PO</a></li>
-          <li><a href="/addnewfpn">Add new FPN</a></li>
-          <li><a href="/addnewholiday">Add new Holiday</a></li>
-          <li><a href="/addnewemployee">Add new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">View
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">View new PO</a></li>
-          <li><a href="#">View new FPN</a></li>
-          <li><a href="#">View new Holiday</a></li>
-          <li><a href="#">View new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Update new PO</a></li>
-          <li><a href="#">Update new FPN</a></li>
-          <li><a href="#">Update new Holiday</a></li>
-          <li><a href="#">Update new Employee</a></li>
-        </ul>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout">LogOut</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="container-fluid">
   <div class="row">
+    <div class="col-sm-12">
+      <h2 align="center">Add New FPN</h2>
+      <h5 align="center">Add a new FPN to the DB</h5>
+      <br>
+      <br>
+    </div>
 
-    
+    <div class="row" >
+      <div class="formwrapper">
+        <form method="POST" action="/addnewfpn">
+
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field" padding-left=5px>
+              {{ form.fpn.label }}: {{ form.fpn }}
+                {% if form.fpn.errors %}
+                  <ul class="errors">
+                    {% for error in form.fpn.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.amount.label }}: {{ form.amount }}
+                {% if form.amount.errors %}
+                  <ul class="errors">
+                    {% for error in form.amount.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.remaining_amount.label }}: {{ form.remaining_amount }}
+                {% if form.remaining_amount.errors %}
+                  <ul class="errors">
+                    {% for error in form.remaining_amount.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+          </div>
+
+
+
+
+<!-- ######################column-2############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field" padding-left=5px>
+              {{ form.fpn_description.label }}: {{ form.fpn_description }}
+                {% if form.fpn_description.errors %}
+                  <ul class="errors">
+                    {% for error in form.fpn_description.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.vendor.label }}: {{ form.vendor }}
+                {% if form.vendor.errors %}
+                  <ul class="errors">
+                    {% for error in form.vendor.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.go_live.label }}: {{ form.go_live }}
+                {% if form.go_live.errors %}
+                  <ul class="errors">
+                    {% for error in form.go_live.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+            <br>
+
+            {{form.add_fpn}}
+            
+          </div>
+<!-- ######################column-3############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field" padding-left=5px>
+              {{ form.resource_duration.label }}: {{ form.resource_duration }}
+                {% if form.resource_duration.errors %}
+                  <ul class="errors">
+                    {% for error in form.resource_duration.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.opening_balance.label }}: {{ form.opening_balance }}
+                {% if form.opening_balance.errors %}
+                  <ul class="errors">
+                    {% for error in form.opening_balance.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.remarks.label }}: {{ form.remarks }}
+                {% if form.remarks.errors %}
+                  <ul class="errors">
+                    {% for error in form.remarks.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+          </div>
+
+
+        </form>
+      </div>
+    </div>
   </div>
-  
-</div>
 
-
-
-</body>
-</html>
+{% endblock %}

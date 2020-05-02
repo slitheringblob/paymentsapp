@@ -1,68 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>VPT-Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/static/bootstrap.min.js"></script>
-</head>
-<body>
+{% extends 'layout.html' %}
 
+{% block content %}
 
-<nav class="navbar navbar-inverse bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/dashboard">Vendor Payment Tracker</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/dashboard">Dashboard</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="">Add
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/addnewpo">Add new PO</a></li>
-          <li><a href="/addnewfpn">Add new FPN</a></li>
-          <li><a href="/addnewholiday">Add new Holiday</a></li>
-          <li><a href="/addnewemployee">Add new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">View
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">View new PO</a></li>
-          <li><a href="#">View new FPN</a></li>
-          <li><a href="#">View new Holiday</a></li>
-          <li><a href="#">View new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Update new PO</a></li>
-          <li><a href="#">Update new FPN</a></li>
-          <li><a href="#">Update new Holiday</a></li>
-          <li><a href="#">Update new Employee</a></li>
-        </ul>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout">LogOut</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="container-fluid">
   <div class="row">
+    <div class="col-sm-12">
+      <h2 align="center">Add New Employee</h2>
+      <h5 align="center">Add a new Employee to the DB</h5>
+      <br>
+      <br>
+    </div>
 
+
+    <div class="row">
+    <div class="formwrapper">
+      <form method="POST" action="/addnewemployee"> 
+          
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+            
+            <div class="form-field">
+            {{ form.emp_code.label }}: {{ form.emp_code }}
+              {% if form.emp_code.errors %}
+                <ul class="errors">
+                  {% for error in form.emp_code.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+            
+            <br>
+            
+            <div class="form-field">
+              {{ form.joining_date.label }}: {{ form.joining_date }}
+                {% if form.joining_date.errors %}
+                  <ul class="errors">
+                    {% for error in form.joining_date.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.manager.label }}: {{ form.manager }}
+                {% if form.manager.errors %}
+                  <ul class="errors">
+                    {% for error in form.manager.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            
+
+          </div>
+
+<!-- ######################column-2############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.emp_name.label }}: {{ form.emp_name }}
+                {% if form.emp_name.errors %}
+                  <ul class="errors">
+                    {% for error in form.emp_name.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-field">
+              {{ form.rate.label }}: {{ form.rate }}
+                {% if form.rate.errors %}
+                  <ul class="errors">
+                    {% for error in form.rate.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+            <br>
+            <br>            
+            
+            {{ form.add_emp }}
+
+
+
+          </div>
+
+<!-- ######################column-3############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.vendor.label }}: {{ form.vendor }}
+                {% if form.vendor.errors %}
+                  <ul class="errors">
+                    {% for error in form.vendor.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.status.label }}: {{ form.status }}
+                {% if form.status.errors %}
+                  <ul class="errors">
+                    {% for error in form.status.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            
+
+          </div>
+      
+      </form>
+    </div>
+  </div>
     
   </div>
-  
-</div>
+    
+  </div>
 
-
-
-</body>
-</html>
+{% endblock %}

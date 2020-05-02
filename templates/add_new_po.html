@@ -1,68 +1,254 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>VPT-Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/static/bootstrap.min.js"></script>
-</head>
-<body>
+{% extends 'layout.html' %}
 
+{% block content %}
 
-<nav class="navbar navbar-inverse bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/dashboard">Vendor Payment Tracker</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/dashboard">Dashboard</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="">Add
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/addnewpo">Add new PO</a></li>
-          <li><a href="/addnewfpn">Add new FPN</a></li>
-          <li><a href="/addnewholiday">Add new Holiday</a></li>
-          <li><a href="/addnewemployee">Add new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">View
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">View new PO</a></li>
-          <li><a href="#">View new FPN</a></li>
-          <li><a href="#">View new Holiday</a></li>
-          <li><a href="#">View new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Update new PO</a></li>
-          <li><a href="#">Update new FPN</a></li>
-          <li><a href="#">Update new Holiday</a></li>
-          <li><a href="#">Update new Employee</a></li>
-        </ul>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout">LogOut</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="container-fluid">
   <div class="row">
+      <h2 align="center">Add New PO</h2>
+      <h5 align="center">Please fill out the fields to add a raised PO</h5>
+      <br>
+      <br>
+      
+    </div>
+  <div class="row">
+    <div class="formwrapper">
+      <form method="POST" action="/addnewpo"> 
+          
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+            
+            <div class="form-field">
+            {{ form.resource_name.label }}: {{ form.resource_name }}
+              {% if form.resource_name.errors %}
+                <ul class="errors">
+                  {% for error in form.resource_name.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+            
+            <br>
+            
+            <div class="form-field">
+              {{ form.noofdays.label }}: {{ form.noofdays }}
+                {% if form.noofdays.errors %}
+                  <ul class="errors">
+                    {% for error in form.noofdays.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
 
+            <br>
+
+            <div class="form-field">
+              {{ form.billingrate.label }}: {{ form.billingrate }}
+                {% if form.billingrate.errors %}
+                  <ul class="errors">
+                    {% for error in form.billingrate.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.total.label }}: {{ form.total }}
+                {% if form.total.errors %}
+                  <ul class="errors">
+                    {% for error in form.total.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.project.label }}: {{ form.project }}
+                {% if form.project.errors %}
+                  <ul class="errors">
+                    {% for error in form.project.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.invoice_no.label }}: {{ form.invoice_no }}
+                {% if form.invoice_no.errors %}
+                  <ul class="errors">
+                    {% for error in form.invoice_no.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+          </div>
+
+<!-- ######################column-2############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.po_vendor.label }}: {{ form.po_vendor }}
+                {% if form.po_vendor.errors %}
+                  <ul class="errors">
+                    {% for error in form.po_vendor.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-field">
+              {{ form.leavestaken.label }}: {{ form.leavestaken }}
+                {% if form.leavestaken.errors %}
+                  <ul class="errors">
+                    {% for error in form.leavestaken.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.billableamount.label }}: {{ form.billableamount }}
+                {% if form.billableamount.errors %}
+                  <ul class="errors">
+                    {% for error in form.billableamount.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>            
+
+            <br>
+
+            <div class="form-field">
+              {{ form.fpn.label }}: {{ form.fpn }}
+                {% if form.fpn.errors %}
+                  <ul class="errors">
+                    {% for error in form.fpn.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.date_raised.label }}: {{ form.date_raised }}
+                {% if form.date_raised.errors %}
+                  <ul class="errors">
+                    {% for error in form.date_raised.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.golive_date.label }}: {{ form.golive_date }}
+                {% if form.golive_date.errors %}
+                  <ul class="errors">
+                    {% for error in form.golive_date.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+            
+            {{ form.add_po }}
+
+
+
+          </div>
+
+<!-- ######################column-3############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.month.label }}: {{ form.month }}
+                {% if form.month.errors %}
+                  <ul class="errors">
+                    {% for error in form.month.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.billeddays.label }}: {{ form.billeddays }}
+                {% if form.billeddays.errors %}
+                  <ul class="errors">
+                    {% for error in form.billeddays.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.gst.label }}: {{ form.gst }}
+                {% if form.gst.errors %}
+                  <ul class="errors">
+                    {% for error in form.gst.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.porf.label }}: {{ form.porf }}
+                {% if form.porf.errors %}
+                  <ul class="errors">
+                    {% for error in form.porf.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.pono.label }}: {{ form.pono }}
+                {% if form.pono.errors %}
+                  <ul class="errors">
+                    {% for error in form.pono.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+          </div>
+      
+      </form>
+    </div>
+  </div>
     
   </div>
-  
-</div>
 
-
-
-</body>
-</html>
+{% endblock %}

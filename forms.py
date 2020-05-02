@@ -12,7 +12,7 @@ class add_po_form(FlaskForm):
 	billeddays = DecimalField('Billed Days',validators = [DataRequired()])
 	billingrate = DecimalField('Billing Rate',validators = [DataRequired()])
 	billableamount = DecimalField('Billable Amount', validators = [DataRequired()])
-	gst = DecimalField('GST' , validators = [DataRequired()])
+	gst = DecimalField('GST@18%' , validators = [DataRequired()])
 	total = DecimalField('Total',validators = [DataRequired()])
 	fpn = StringField('FPN',validators = [DataRequired()])
 	porf = StringField('PORF',validators = [DataRequired()])
@@ -23,7 +23,7 @@ class add_po_form(FlaskForm):
 	golive_date = DateField('Go live Date',format='%d-%m-%Y')
 	add_po = SubmitField('Add PO')
 
-class add_emp_form(FlaskForm):
+class add_employee_form(FlaskForm):
 
 	emp_code = StringField('Employee Code',validators = [DataRequired()])
 	emp_name = StringField('Employee Name',validators = [DataRequired()])
@@ -42,10 +42,12 @@ class add_fpn_form(FlaskForm):
 	vendor = StringField('Vendors',validators = [DataRequired()])
 	opening_balance = DecimalField('Opening Balance',validators = [DataRequired()])
 	remaining_amount = DecimalField('Opening Balance',validators = [DataRequired()])
-	go_live = StringField('Go Libe Date')
+	go_live = StringField('Go Live Date')
 	remarks = StringField('Remarks', validators = [DataRequired()])
+	add_fpn = SubmitField('Add FPN')
 
 class add_holiday_form(FlaskForm):
 
 	date = DateField('Holiday Date',format='%d-%m-%Y',validators = [DataRequired()])
 	reason = StringField('Holiday Reason',validators = [DataRequired()])
+	add_holiday = SubmitField('Add Holiday')
