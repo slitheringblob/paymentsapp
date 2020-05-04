@@ -13,13 +13,13 @@
 
     <div class="row">
     <div class="formwrapper">
-      <form method="POST" action="/addnewemployee"> 
-          
+      <form method="POST" action=""> 
+          {{ form.hidden_tag() }}         
 <!-- ######################column-1############################################ -->
           <div class="col-sm-4">
             
             <div class="form-field">
-            {{ form.emp_code.label }}: {{ form.emp_code }}
+            {{ form.emp_code.label(class="form-control-label") }}: {{ form.emp_code(class="form-control form-control-lg")}}
               {% if form.emp_code.errors %}
                 <ul class="errors">
                   {% for error in form.emp_code.errors %}
@@ -32,7 +32,7 @@
             <br>
             
             <div class="form-field">
-              {{ form.joining_date.label }}: {{ form.joining_date }}
+              {{ form.joining_date.label(class="form-control-label") }}: {{ form.joining_date(class="form-control form-control-lg") }}
                 {% if form.joining_date.errors %}
                   <ul class="errors">
                     {% for error in form.joining_date.errors %}
@@ -45,7 +45,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.manager.label }}: {{ form.manager }}
+              {{ form.manager.label(class="form-control-label") }}: {{ form.manager(class="form-control form-control-lg") }}
                 {% if form.manager.errors %}
                   <ul class="errors">
                     {% for error in form.manager.errors %}
@@ -64,7 +64,7 @@
 <!-- ######################column-2############################################ -->
           <div class="col-sm-4">
             <div class="form-field">
-              {{ form.emp_name.label }}: {{ form.emp_name }}
+              {{ form.emp_name.label(class="form-control-label") }}: {{ form.emp_name(class="form-control form-control-lg") }}
                 {% if form.emp_name.errors %}
                   <ul class="errors">
                     {% for error in form.emp_name.errors %}
@@ -75,7 +75,7 @@
             </div>
             <br>
             <div class="form-field">
-              {{ form.rate.label }}: {{ form.rate }}
+              {{ form.rate.label(class="form-control-label")}}: {{ form.rate(class="form-control form-control-lg") }}
                 {% if form.rate.errors %}
                   <ul class="errors">
                     {% for error in form.rate.errors %}
@@ -87,9 +87,11 @@
 
             <br>
             <br>
+            <br>
+            <br>
             <br>            
             
-            {{ form.add_emp }}
+            {{ form.add_emp(class="btn btn-primary") }}
 
 
 
@@ -98,7 +100,7 @@
 <!-- ######################column-3############################################ -->
           <div class="col-sm-4">
             <div class="form-field">
-              {{ form.vendor.label }}: {{ form.vendor }}
+              {{ form.vendor.label(class="form-control-label") }}: {{ form.vendor(class="form-control form-control-lg") }}
                 {% if form.vendor.errors %}
                   <ul class="errors">
                     {% for error in form.vendor.errors %}
@@ -111,7 +113,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.status.label }}: {{ form.status }}
+              {{ form.status.label(class="form-control-label") }}: {{ form.status(class="form-control form-control-lg") }}
                 {% if form.status.errors %}
                   <ul class="errors">
                     {% for error in form.status.errors %}

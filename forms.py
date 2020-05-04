@@ -48,6 +48,6 @@ class add_fpn_form(FlaskForm):
 
 class add_holiday_form(FlaskForm):
 
-	date = DateField('Holiday Date',format='%d-%m-%Y',validators = [DataRequired()])
+	date = DateField('Holiday Date(dd-mm-yyyy)',format='%d-%m-%Y',validators = [DataRequired()])
 	reason = StringField('Holiday Reason',validators = [DataRequired()])
 	add_holiday = SubmitField('Add Holiday')

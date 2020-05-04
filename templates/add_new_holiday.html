@@ -11,12 +11,12 @@
     
     <div class="row" >
       <div class="formwrapper">
-        <form method="POST" action="/addnewholiday">
-
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
         <!-- ######################column-1############################################ -->
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="form-field" align="center">
-              {{ form.date.label }}: {{ form.date }}
+              {{ form.date.label(class="form-control-label") }}: {{ form.date(class="form-control form-control-lg") }}
                 {% if form.date.errors %}
                   <ul class="errors">
                     {% for error in form.date.errors %}
@@ -27,9 +27,9 @@
             </div>
           </div>  
         <!-- ######################column-2############################################ -->
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="form-field">
-              {{ form.reason.label }}: {{ form.reason }}
+              {{ form.reason.label(class="form-control-label") }}: {{ form.reason(class="form-control form-control-lg") }}
                 {% if form.reason.errors %}
                   <ul class="errors">
                     {% for error in form.reason.errors %}
@@ -42,10 +42,16 @@
             <br>
         </div>
         
-        <div align="center">{{form.add_holiday}}</div>
+        <div class="col-sm-4">
+          <br>
+          {{form.add_holiday(class="btn btn-primary")}}
+          
+
+        </div>
 
 
         </form>
+          }
       </div>
     </div> 
 

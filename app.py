@@ -29,7 +29,8 @@ def login_required(f):
 def hello():
 	pass
 
-@app.route('/dashboard')
+@app.route('/dashboard',methods=['GET','POST'])
+@login_required
 def dashboard():
 	#conn = connect_db()
 	return render_template("dashboard.html")
@@ -56,35 +57,62 @@ def logout():
 
 ######################### Add_Functionality Routes ########################
 
-@app.route('/addnewpo')
+@app.route('/addnewpo',methods=['GET','POST'])
 @login_required
 def addnewpo():
 	error = None
 	form = add_po_form()
+
+	if form.validate_on_submit():
+		flash(f'Added PO for {form.porf.data}!', 'success')
+		return redirect(url_for('dashboard'))
+
+
 	return render_template("add_new_po.html",error=error,title = 'Add New PO',form = form)
 
 
-@app.route('/addnewholiday')
+@app.route('/addnewholiday',methods=['GET','POST'])
 @login_required
 def addnewholiday():
 	error = None
 	form = add_holiday_form()
-	return render_template("add_new_holiday.html",error=error,title = 'Add New PO',form = form)
+	print(form.errors)
+
+	if form.validate_on_submit():
+		flash(f'Added New Holiday for {form.reason.data} on {form.date.data}!', 'success')
+		print('validated holiday')
+		return redirect(url_for('dashboard'))
+	else:
+		print(form.errors)		
+		print('invalid holiday')
+
+	return render_template("add_new_holiday.html",error=error,title = 'Add New Holiday',form = form)
 
 
-@app.route('/addnewfpn')
+@app.route('/addnewfpn',methods=['GET','POST'])
 @login_required
 def addnewfpn():
 	error = None
 	form = add_fpn_form()
-	return render_template("add_new_fpn.html",error=error,title = 'Add New PO',form = form)
+	if form.validate_on_submit():
+		flash(f'Added new FPN for {form.fpn.data} and {form.opening_balance.data}!', 'success')
+		return redirect(url_for('dashboard')) 
 
-@app.route('/addnewemployee')
+
+	return render_template("add_new_fpn.html",error=error,title = 'Add New FPN',form = form)
+
+@app.route('/addnewemployee',methods=['GET','POST'])
 @login_required
 def addnewemployee():
 	error = None
 	form = add_employee_form()
-	return render_template("add_new_employee.html",error=error,title = 'Add New PO',form = form)
+
+	if form.validate_on_submit():
+		flash(f'Added Employee {form.emp_code.data}!', 'success')
+		return redirect(url_for('dashboard'))
+
+
+	return render_template("add_new_employee.html",error=error,title = 'Add New Employee',form = form)
 
 
 ####################################### END ROUTES ##########################################################################

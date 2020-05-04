@@ -12,12 +12,12 @@
 
     <div class="row" >
       <div class="formwrapper">
-        <form method="POST" action="/addnewfpn">
-
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
 <!-- ######################column-1############################################ -->
           <div class="col-sm-4">
             <div class="form-field" padding-left=5px>
-              {{ form.fpn.label }}: {{ form.fpn }}
+              {{ form.fpn.label(class="form-control-label") }}: {{ form.fpn(class="form-control form-control-lg") }}
                 {% if form.fpn.errors %}
                   <ul class="errors">
                     {% for error in form.fpn.errors %}
@@ -30,7 +30,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.amount.label }}: {{ form.amount }}
+              {{ form.amount.label(class="form-control-label") }}: {{ form.amount(class="form-control form-control-lg") }}
                 {% if form.amount.errors %}
                   <ul class="errors">
                     {% for error in form.amount.errors %}
@@ -43,7 +43,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.remaining_amount.label }}: {{ form.remaining_amount }}
+              {{ form.remaining_amount.label(class="form-control-label") }}: {{ form.remaining_amount(class="form-control form-control-lg") }}
                 {% if form.remaining_amount.errors %}
                   <ul class="errors">
                     {% for error in form.remaining_amount.errors %}
@@ -61,7 +61,7 @@
 <!-- ######################column-2############################################ -->
           <div class="col-sm-4">
             <div class="form-field" padding-left=5px>
-              {{ form.fpn_description.label }}: {{ form.fpn_description }}
+              {{ form.fpn_description.label(class="form-control-label") }}: {{ form.fpn_description(class="form-control form-control-lg") }}
                 {% if form.fpn_description.errors %}
                   <ul class="errors">
                     {% for error in form.fpn_description.errors %}
@@ -74,7 +74,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.vendor.label }}: {{ form.vendor }}
+              {{ form.vendor.label(class="form-control-label") }}: {{ form.vendor(class="form-control form-control-lg") }}
                 {% if form.vendor.errors %}
                   <ul class="errors">
                     {% for error in form.vendor.errors %}
@@ -87,7 +87,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.go_live.label }}: {{ form.go_live }}
+              {{ form.go_live.label(class="form-control-label") }}: {{ form.go_live(class="form-control form-control-lg")}}
                 {% if form.go_live.errors %}
                   <ul class="errors">
                     {% for error in form.go_live.errors %}
@@ -100,13 +100,13 @@
             <br>
             <br>
 
-            {{form.add_fpn}}
+            {{form.add_fpn(class="btn btn-primary")}}
             
           </div>
 <!-- ######################column-3############################################ -->
           <div class="col-sm-4">
             <div class="form-field" padding-left=5px>
-              {{ form.resource_duration.label }}: {{ form.resource_duration }}
+              {{ form.resource_duration.label(class="form-control-label") }}: {{ form.resource_duration(class="form-control form-control-lg") }}
                 {% if form.resource_duration.errors %}
                   <ul class="errors">
                     {% for error in form.resource_duration.errors %}
@@ -119,7 +119,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.opening_balance.label }}: {{ form.opening_balance }}
+              {{ form.opening_balance.label(class="form-control-label") }}: {{ form.opening_balance(class="form-control form-control-lg")}}
                 {% if form.opening_balance.errors %}
                   <ul class="errors">
                     {% for error in form.opening_balance.errors %}
@@ -132,7 +132,7 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.remarks.label }}: {{ form.remarks }}
+              {{ form.remarks.label(class="form-control-label") }}: {{ form.remarks(class="form-control form-control-lg") }}
                 {% if form.remarks.errors %}
                   <ul class="errors">
                     {% for error in form.remarks.errors %}

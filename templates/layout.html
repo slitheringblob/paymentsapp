@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>VPT-Dashboard</title>
+	<title>VPT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
@@ -57,8 +57,18 @@
   </div>
 </nav>
 <div class="container-fluid">
-
+  {% with messages = get_flashed_messages(with_categories=true)%}
+    {%if messages %}
+      {% for category,message in messages %}
+        <div class="alert alert-{{category}}">
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {%endwith%}
+  
   {%block content %}{% endblock %}
+  
   
   
 </div>

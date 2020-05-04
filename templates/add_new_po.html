@@ -11,13 +11,13 @@
     </div>
   <div class="row">
     <div class="formwrapper">
-      <form method="POST" action="/addnewpo"> 
-          
+      <form method="POST" action=""> 
+         {{ form.hidden_tag() }}
 <!-- ######################column-1############################################ -->
           <div class="col-sm-4">
             
             <div class="form-field">
-            {{ form.resource_name.label }}: {{ form.resource_name }}
+            {{ form.resource_name.label(class="form-control-label") }}: {{ form.resource_name(class="form-control form-control-lg") }}
               {% if form.resource_name.errors %}
                 <ul class="errors">
                   {% for error in form.resource_name.errors %}
@@ -30,7 +30,7 @@
             <br>
             
             <div class="form-field">
-              {{ form.noofdays.label }}: {{ form.noofdays }}
+              {{ form.noofdays.label(class="form-control-label") }}: {{ form.noofdays(class="form-control form-control-lg") }}
                 {% if form.noofdays.errors %}
                   <ul class="errors">
                     {% for error in form.noofdays.errors %}
@@ -43,7 +43,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.billingrate.label }}: {{ form.billingrate }}
+              {{ form.billingrate.label(class="form-control-label") }}: {{ form.billingrate(class="form-control form-control-lg") }}
                 {% if form.billingrate.errors %}
                   <ul class="errors">
                     {% for error in form.billingrate.errors %}
@@ -56,7 +56,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.total.label }}: {{ form.total }}
+              {{ form.total.label(class="form-control-label") }}: {{ form.total(class="form-control form-control-lg") }}
                 {% if form.total.errors %}
                   <ul class="errors">
                     {% for error in form.total.errors %}
@@ -69,7 +69,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.project.label }}: {{ form.project }}
+              {{ form.project.label(class="form-control-label") }}: {{ form.project(class="form-control form-control-lg") }}
                 {% if form.project.errors %}
                   <ul class="errors">
                     {% for error in form.project.errors %}
@@ -82,7 +82,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.invoice_no.label }}: {{ form.invoice_no }}
+              {{ form.invoice_no.label(class="form-control-label") }}: {{ form.invoice_no(class="form-control form-control-lg")}}
                 {% if form.invoice_no.errors %}
                   <ul class="errors">
                     {% for error in form.invoice_no.errors %}
@@ -97,7 +97,7 @@
 <!-- ######################column-2############################################ -->
           <div class="col-sm-4">
             <div class="form-field">
-              {{ form.po_vendor.label }}: {{ form.po_vendor }}
+              {{ form.po_vendor.label(class="form-control-label") }}: {{ form.po_vendor(class="form-control form-control-lg") }}
                 {% if form.po_vendor.errors %}
                   <ul class="errors">
                     {% for error in form.po_vendor.errors %}
@@ -108,7 +108,7 @@
             </div>
             <br>
             <div class="form-field">
-              {{ form.leavestaken.label }}: {{ form.leavestaken }}
+              {{ form.leavestaken.label(class="form-control-label") }}: {{ form.leavestaken(class="form-control form-control-lg") }}
                 {% if form.leavestaken.errors %}
                   <ul class="errors">
                     {% for error in form.leavestaken.errors %}
@@ -121,7 +121,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.billableamount.label }}: {{ form.billableamount }}
+              {{ form.billableamount.label(class="form-control-label") }}: {{ form.billableamount(class="form-control form-control-lg") }}
                 {% if form.billableamount.errors %}
                   <ul class="errors">
                     {% for error in form.billableamount.errors %}
@@ -134,7 +134,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.fpn.label }}: {{ form.fpn }}
+              {{ form.fpn.label(class="form-control-label") }}: {{ form.fpn(class="form-control form-control-lg") }}
                 {% if form.fpn.errors %}
                   <ul class="errors">
                     {% for error in form.fpn.errors %}
@@ -147,7 +147,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.date_raised.label }}: {{ form.date_raised }}
+              {{ form.date_raised.label(class="form-control-label") }}: {{ form.date_raised(class="form-control form-control-lg") }}
                 {% if form.date_raised.errors %}
                   <ul class="errors">
                     {% for error in form.date_raised.errors %}
@@ -160,7 +160,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.golive_date.label }}: {{ form.golive_date }}
+              {{ form.golive_date.label(class="form-control-label") }}: {{ form.golive_date(class="form-control form-control-lg") }}
                 {% if form.golive_date.errors %}
                   <ul class="errors">
                     {% for error in form.golive_date.errors %}
@@ -172,7 +172,7 @@
 
             <br>
             
-            {{ form.add_po }}
+            {{ form.add_po(class="btn btn-primary") }}
 
 
 
@@ -181,7 +181,7 @@
 <!-- ######################column-3############################################ -->
           <div class="col-sm-4">
             <div class="form-field">
-              {{ form.month.label }}: {{ form.month }}
+              {{ form.month.label(class="form-control-label") }}: {{ form.month(class="form-control form-control-lg") }}
                 {% if form.month.errors %}
                   <ul class="errors">
                     {% for error in form.month.errors %}
@@ -194,7 +194,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.billeddays.label }}: {{ form.billeddays }}
+              {{ form.billeddays.label(class="form-control-label") }}: {{ form.billeddays(class="form-control form-control-lg") }}
                 {% if form.billeddays.errors %}
                   <ul class="errors">
                     {% for error in form.billeddays.errors %}
@@ -207,7 +207,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.gst.label }}: {{ form.gst }}
+              {{ form.gst.label(class="form-control-label") }}: {{ form.gst(class="form-control form-control-lg")}}
                 {% if form.gst.errors %}
                   <ul class="errors">
                     {% for error in form.gst.errors %}
@@ -220,7 +220,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.porf.label }}: {{ form.porf }}
+              {{ form.porf.label(class="form-control-label") }}: {{ form.porf(class="form-control form-control-lg")}}
                 {% if form.porf.errors %}
                   <ul class="errors">
                     {% for error in form.porf.errors %}
@@ -233,7 +233,7 @@
             <br>
 
             <div class="form-field">
-              {{ form.pono.label }}: {{ form.pono }}
+              {{ form.pono.label(class="form-control-label") }}: {{ form.pono(class="form-control form-control-lg") }}
                 {% if form.pono.errors %}
                   <ul class="errors">
                     {% for error in form.pono.errors %}
