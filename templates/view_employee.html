@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 align="center">Add New Employee</h2>
+      <h5 align="center">Add a new Employee to the DB</h5>
+      <br>
+      <br>
+    </div>
+
+
+    <div class="row">
+    <div class="formwrapper">
+      <form method="POST" action=""> 
+          {{ form.hidden_tag() }}         
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+            
+            <div class="form-field">
+            {{ form.emp_code.label(class="form-control-label") }}: {{ form.emp_code(class="form-control form-control-lg")}}
+              {% if form.emp_code.errors %}
+                <ul class="errors">
+                  {% for error in form.emp_code.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+            
+            <br>
+            
+            <div class="form-field">
+              {{ form.joining_date.label(class="form-control-label") }}: {{ form.joining_date(class="form-control form-control-lg") }}
+                {% if form.joining_date.errors %}
+                  <ul class="errors">
+                    {% for error in form.joining_date.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.manager.label(class="form-control-label") }}: {{ form.manager(class="form-control form-control-lg") }}
+                {% if form.manager.errors %}
+                  <ul class="errors">
+                    {% for error in form.manager.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            
+
+          </div>
+
+<!-- ######################column-2############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.emp_name.label(class="form-control-label") }}: {{ form.emp_name(class="form-control form-control-lg") }}
+                {% if form.emp_name.errors %}
+                  <ul class="errors">
+                    {% for error in form.emp_name.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-field">
+              {{ form.rate.label(class="form-control-label")}}: {{ form.rate(class="form-control form-control-lg") }}
+                {% if form.rate.errors %}
+                  <ul class="errors">
+                    {% for error in form.rate.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>            
+            
+            {{ form.add_emp(class="btn btn-primary") }}
+
+
+
+          </div>
+
+<!-- ######################column-3############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.vendor.label(class="form-control-label") }}: {{ form.vendor(class="form-control form-control-lg") }}
+                {% if form.vendor.errors %}
+                  <ul class="errors">
+                    {% for error in form.vendor.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field">
+              {{ form.status.label(class="form-control-label") }}: {{ form.status(class="form-control form-control-lg") }}
+                {% if form.status.errors %}
+                  <ul class="errors">
+                    {% for error in form.status.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            
+
+          </div>
+      
+      </form>
+    </div>
+  </div>
+    
+  </div>
+    
+  </div>
+
+{% endblock %}

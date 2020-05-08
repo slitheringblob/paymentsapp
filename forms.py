@@ -2,12 +2,15 @@ from flask_wtf import FlaskForm
 from wtforms import (StringField,TextAreaField,SubmitField,PasswordField,DateField,SelectField,IntegerField,DecimalField)
 from wtforms.validators import (DataRequired,Email,EqualTo,Length,URL)
 
+
+################################# Add Classes ########################################################################################################
+
 class add_po_form(FlaskForm):
 
 	resource_name = StringField('Resource Name',validators=[DataRequired()])
 	po_vendor = StringField('Vendor',validators = [DataRequired()])
 	month = StringField('Month', validators = [DataRequired()])
-	noofdays = IntegerField('No Of Days', validators = [DataRequired()])
+	noofdays = DecimalField('No Of Days', validators = [DataRequired()])
 	leavestaken = DecimalField('Leaves Taken',validators = [DataRequired()])
 	billeddays = DecimalField('Billed Days',validators = [DataRequired()])
 	billingrate = DecimalField('Billing Rate',validators = [DataRequired()])
@@ -51,3 +54,27 @@ class add_holiday_form(FlaskForm):
 	date = DateField('Holiday Date(dd-mm-yyyy)',format='%d-%m-%Y',validators = [DataRequired()])
 	reason = StringField('Holiday Reason',validators = [DataRequired()])
 	add_holiday = SubmitField('Add Holiday')
+
+################################## View Classes #####################################################################################################
+
+class view_po_form(FlaskForm):
+
+	view_po_pono = StringField('PO Number')
+	view_po_porf = StringField('PORF')
+	view_po_fpn = StringField('FPN')
+	view_po_invoice_no = StringField('Invoice Number')
+	view_po_submit = SubmitField("View List")
+
+class view_fpn_form(FlaskForm):
+	view_fpn_fpn = StringField('FPN')
+	view_fpn_submit = SubmitField('View List')
+
+class view_employee_form(FlaskForm):
+	view_emp_code = StringField('Employee Code',validators = [DataRequired()])
+	view_emp_name = StringField('Employee Name',validators = [DataRequired()])
+	view_emp_submit = SubmitField('View List')
+
+#view holiday will just be a list that is directly rendered over the layout by jinja.
+#class view_holiday_form(FlaskForm):
+
+#####################################################################################################################################################

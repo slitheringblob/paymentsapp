@@ -2,12 +2,13 @@ from flask import Flask,render_template,redirect,url_for,request,session,flash,g
 from functools import wraps
 import sqlite3
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
+from forms import view_po_form,view_fpn_form,view_employee_form
 
 
 app=Flask(__name__)
 
 app.secret_key= "my precious"
-app.database = "/db/vpt.db"
+database = "C:/Users/jayde/Documents/GitHub/paymentsapp/db/vpt.db"
 
 ################################login required decorator ####################################
 
@@ -55,18 +56,47 @@ def logout():
 	flash('You were just logged Out!')
 	return redirect(url_for('login'))
 
-######################### Add_Functionality Routes ########################
+######################### Add_Functionality Routes #######################################################################################################
 
 @app.route('/addnewpo',methods=['GET','POST'])
 @login_required
 def addnewpo():
 	error = None
 	form = add_po_form()
+	conn = connect_db()
+	print(form.errors)
 
 	if form.validate_on_submit():
-		flash(f'Added PO for {form.porf.data}!', 'success')
-		return redirect(url_for('dashboard'))
+		c = conn.cursor()
 
+		resource_name = form.resource_name.data
+		po_vendor = form.po_vendor.data
+		month = form.month.data
+		noofdays = form.noofdays.data
+		leavestaken = form.leavestaken.data
+		billeddays = form.billeddays.data
+		billingrate = form.billingrate.data
+		billableamount = form.billableamount.data
+		gst = form.gst.data
+		total = form.total.data
+		fpn = form.fpn.data
+		porf = form.porf.data
+		project = form.project.data
+		date_raised = form.date_raised.data
+		pono = form.pono.data
+		invoice_no = form.invoice_no.data
+		golive_date = form.golive_date.data
+		
+		c.execute("INSERT INTO MS_PO_MASTER VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+		conn.commit()
+		conn.close()
+
+		print('validated form')
+		flash(f'Added PO for PORF:{porf}!', 'success')
+		return redirect(url_for('dashboard'))
+	else:
+		print(form.errors)
+		print('invalid form')
 
 	return render_template("add_new_po.html",error=error,title = 'Add New PO',form = form)
 
@@ -76,15 +106,27 @@ def addnewpo():
 def addnewholiday():
 	error = None
 	form = add_holiday_form()
-	print(form.errors)
 
+	date = form.date.data
+	reason = form.reason.data
+
+
+	print(form.errors)
+	conn = connect_db()
 	if form.validate_on_submit():
-		flash(f'Added New Holiday for {form.reason.data} on {form.date.data}!', 'success')
+		c = conn.cursor()
+		c.execute("INSERT INTO MS_HOLIDAY_MASTER VALUES(?,?)",(date,reason,))
+
+		flash(f'Added New Holiday for {reason} on {date} !', 'success')
 		print('validated holiday')
+		conn.commit()
+		conn.close()
+
 		return redirect(url_for('dashboard'))
 	else:
 		print(form.errors)		
 		print('invalid holiday')
+	
 
 	return render_template("add_new_holiday.html",error=error,title = 'Add New Holiday',form = form)
 
@@ -113,12 +155,42 @@ def addnewemployee():
 
 
 	return render_template("add_new_employee.html",error=error,title = 'Add New Employee',form = form)
+##################################### View_fucntionality Routes##############################################################
+
+@app.route('/viewpo',methods = ['GET','POST'])
+@login_required
+def viewpo():
+	error = None
+	form = view_po_form()
+
+	return render_template("view_po.html",error = error,title = 'View PO',form=form)
+
+@app.route('/viewfpn',methods = ['GET','POST'])
+@login_required
+def viewfpn():
+	error = None
+	form = view_fpn_form()
+
+	return render_template("view_fpn.html",error = error,title = 'View FPN',form=form)
+
+@app.route('/viewemployee',methods = ['GET','POST'])
+@login_required
+def viewemployee():
+	error = None
+	form = view_employee_form()
+
+	return render_template("view_employee.html",error = error,title = 'View Employee',form=form)
+
+@app.route('/viewholiday',methods = ['GET','POST'])
+@login_required
+def viewholiday():
+	return render_template("view_holiday.html",error = error,title = 'View Holiday')
 
 
 ####################################### END ROUTES ##########################################################################
 
 def connect_db():
-	conn = sqlite3.connect(app.database)
+	conn = sqlite3.connect(database)
 	print("Connection Established")
 	print(sqlite3.version)
 	return conn

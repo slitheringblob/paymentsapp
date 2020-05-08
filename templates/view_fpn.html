@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 align="center">View FPN</h2>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <div class="row" >
+      <div class="formwrapper">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+            
+            </div>
+            <div class="col-sm-4">
+              <br>
+              <br>
+              <div class="form-field" padding-left=5px>
+              {{ form.view_fpn_fpn.label(class="form-control-label") }}: {{ form.view_fpn_fpn(class="form-control form-control-lg") }}
+                {% if form.view_fpn_fpn.errors %}
+                  <ul class="errors">
+                    {% for error in form.fpn.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <br>
+            <br>
+              {{ form.view_fpn_submit(class="btn btn-primary") }}  
+            </div>
+            
+          </form>
+
+            <br>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

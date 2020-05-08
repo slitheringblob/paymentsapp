@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <div class="row">
+      <h2 align="center">View Raised PO</h2>
+      <h5 align="center">Enter any one of the following fields</h5>
+      <br>
+      <br>
+      <br>
+      
+    </div>
+  <div class="row">
+    <div class="formwrapper">
+      <form method="POST" action="">
+         {{ form.hidden_tag() }}
+<!-- ######################column-1############################################ -->
+          <div class="col-sm-4">
+
+            <div class="form-field">
+              {{ form.view_po_invoice_no.label(class="form-control-label") }}: {{ form.view_po_invoice_no(class="form-control form-control-lg")}}
+                {% if form.view_po_invoice_no.errors %}
+                  <ul class="errors">
+                    {% for error in form.view_po_invoice_no.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br><br>
+
+             <div class="form-field">
+              {{ form.view_po_pono.label(class="form-control-label") }}: {{ form.view_po_pono(class="form-control form-control-lg") }}
+                {% if form.view_po_pono.errors %}
+                  <ul class="errors">
+                    {% for error in form.view_po_pono.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+          </div>
+
+<!-- ######################column-2############################################ -->
+            
+            <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.view_po_fpn.label(class="form-control-label") }}: {{ form.view_po_fpn(class="form-control form-control-lg") }}
+                {% if form.view_po_fpn.errors %}
+                  <ul class="errors">
+                    {% for error in form.view_po_fpn.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <br><br><br><br><br><br>
+            
+            {{ form.view_po_submit(class="btn btn-primary") }}
+
+          </div>
+            
+
+
+
+          
+
+<!-- ######################column-3############################################ -->
+          <div class="col-sm-4">
+            <div class="form-field">
+              {{ form.view_po_porf.label(class="form-control-label") }}: {{ form.view_po_porf(class="form-control form-control-lg")}}
+                {% if form.view_po_porf.errors %}
+                  <ul class="errors">
+                    {% for error in form.view_po_porf.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+          </div>
+
+            <br>
+
+           
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+    
+  </div>
+
+{% endblock %}
