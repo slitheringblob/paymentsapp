@@ -177,14 +177,24 @@ def viewfpn():
 @login_required
 def viewemployee():
 	error = None
-	form = view_employee_form()
+	conn = connect_db()
+	c = conn.cursor()
+	c.execute("select * from MS_EMP_MASTER")
+	rows = c.fetchall()
 
-	return render_template("view_employee.html",error = error,title = 'View Employee',form=form)
+
+	return render_template("view_employee.html",error = error,title = 'View Employee',rows = rows)
 
 @app.route('/viewholiday',methods = ['GET','POST'])
 @login_required
 def viewholiday():
-	return render_template("view_holiday.html",error = error,title = 'View Holiday')
+	error = None
+	conn = connect_db()
+	c = conn.cursor()
+	c.execute("select * from MS_HOLIDAY_MASTER")
+	rows = c.fetchall()
+
+	return render_template("view_holiday.html",error = error,title = 'View Holiday',rows = rows)
 
 
 ####################################### END ROUTES ##########################################################################

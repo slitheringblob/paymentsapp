@@ -60,7 +60,7 @@ class add_holiday_form(FlaskForm):
 class view_po_form(FlaskForm):
 
 	view_po_pono = StringField('PO Number')
-	view_po_porf = StringField('PORF')
+	view_po_porf = StringField('PORF',validators = [DataRequired()])
 	view_po_fpn = StringField('FPN')
 	view_po_invoice_no = StringField('Invoice Number')
 	view_po_submit = SubmitField("View List")
@@ -69,10 +69,11 @@ class view_fpn_form(FlaskForm):
 	view_fpn_fpn = StringField('FPN')
 	view_fpn_submit = SubmitField('View List')
 
-class view_employee_form(FlaskForm):
-	view_emp_code = StringField('Employee Code',validators = [DataRequired()])
-	view_emp_name = StringField('Employee Name',validators = [DataRequired()])
-	view_emp_submit = SubmitField('View List')
+#view holiday will just be a list that is directly rendered over the layout by jinja.
+# class view_employee_form(FlaskForm):
+# 	view_emp_code = StringField('Employee Code',validators = [DataRequired()])
+# 	view_emp_name = StringField('Employee Name')
+# 	view_emp_submit = SubmitField('View List')
 
 #view holiday will just be a list that is directly rendered over the layout by jinja.
 #class view_holiday_form(FlaskForm):
