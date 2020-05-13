@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 align="center">View PO</h2>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <div class="row">
+    <div class="row" style="padding: 25px">
+      <table class="table table-bordered table-dark table-hover">  
+        <thead class="thead-dark">
+          <td>#</td>
+          <td>Resource Name</td>  
+          <td>Vendor</td>  
+          <td>Month</td> 
+          <td>No of Days</td> 
+          <td>Leaves Taken</td>
+          <td>Billed Days</td>
+          <td>Billing Rate</td>
+          <td>Billable Amount</td>
+          <td>GST@18</td>
+          <td>Total</td>
+          <td>FPN</td>
+          <td>PORF</td>
+          <td>Project</td>
+          <td>Date Raised</td>
+          <td>PO Number</td>
+          <td>Invoice No.</td>
+          <td>Go-Live Date</td>
+        </thead>  
+      
+        {% for row in rows %} 
+      
+          <tr>  
+              <td>{{row[0]}}</td>  
+              <td>{{row[1]}}</td>  
+              <td>{{row[2]}}</td>  
+              <td>{{row[3]}}</td>
+              <td>{{row[4]}}</td>
+              <td>{{row[5]}}</td>
+              <td>{{row[6]}}</td>
+              <td>{{row[7]}}</td>
+              <td>{{row[8]}}</td>
+              <td>{{row[9]}}</td>
+              <td>{{row[10]}}</td>
+              <td>{{row[11]}}</td>
+              <td>{{row[12]}}</td>
+              <td>{{row[13]}}</td>
+              <td>{{row[14]}}</td>
+              <td>{{row[15]}}</td>
+              <td>{{row[16]}}</td>
+              <td>{{row[17]}}</td>
+
+          </tr>  
+      
+        {% endfor %}  
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

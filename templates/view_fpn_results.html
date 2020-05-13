@@ -4,23 +4,24 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <h2 align="center">View Employees</h2>
-      <h5 align="center">List of active Vendor Employees</h5>
+      <h2 align="center">View FPN</h2>
+      <br>
       <br>
       <br>
     </div>
 
+    <div class="row">
     <div class="row" style="padding: 25px">
       <table class="table table-bordered table-dark table-hover">  
         <thead class="thead-dark">
           <td>#</td>
-          <td>Emp. Code</td>  
-          <td>Name</td>  
-          <td>Vendor</td> 
-          <td>Joining Date</td> 
-          <td>Rate</td>
-          <td>Status</td>
-          <td>Manager</td>
+          <td>FPN</td>  
+          <td>FPN Description</td>  
+          <td>Resource Duration</td> 
+          <td>Amount</td> 
+          <td>Opening Balance</td>
+          <td>Amount Utilized</td>
+          <td>Remaining Amount</td>
         </thead>  
       
         {% for row in rows %} 
@@ -39,7 +40,6 @@
         {% endfor %}  
       </table>
     </div>
-    
-</div>
+  </div>
 
 {% endblock %}

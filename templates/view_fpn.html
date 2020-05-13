@@ -10,15 +10,12 @@
       <br>
     </div>
 
-    <div class="row" >
+    <div class="row" style="padding: 25px">
       <div class="formwrapper">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
 <!-- ######################column-1############################################ -->
-          <div class="col-sm-4">
-            
-            </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <br>
               <br>
               <div class="form-field" padding-left=5px>
@@ -31,18 +28,17 @@
                   </ul>
                 {% endif %}
             </div>
-            <br>
-            <br>
-              {{ form.view_fpn_submit(class="btn btn-primary") }}  
+                
+            </div>
+            <div class="col-sm-6">
+              <br><br><br>
+              {{ form.view_fpn_submit(class="btn btn-primary") }}
             </div>
             
           </form>
-
-            <br>
-
-        </form>
+        </div>
       </div>
-    </div>
-  </div>
+
+    
 
 {% endblock %}

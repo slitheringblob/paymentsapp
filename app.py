@@ -2,7 +2,7 @@ from flask import Flask,render_template,redirect,url_for,request,session,flash,g
 from functools import wraps
 import sqlite3
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
-from forms import view_po_form,view_fpn_form,view_employee_form
+from forms import view_po_form,view_fpn_form
 
 
 app=Flask(__name__)
@@ -163,6 +163,36 @@ def viewpo():
 	error = None
 	form = view_po_form()
 
+	pono = form.view_po_pono.data
+	porf = form.view_po_porf.data
+	fpn = form.view_po_fpn.data
+	invoice_no = form.view_po_invoice_no.data
+
+	conn = connect_db()
+	c = conn.cursor()
+
+	if form.validate_on_submit():
+		if pono=="" and porf=="" and fpn=="":
+			c.execute("select * from MS_PO_MASTER WHERE invoice_no=?",(invoice_no,))
+			rows = c.fetchall()
+			return render_template("view_po_results.html",error = error,title = 'Search Results',form=form,rows = rows)
+
+		if pono=="" and porf=="" and invoice_no=="":
+			c.execute("select * from MS_PO_MASTER WHERE fpn=?",(fpn,))
+			rows = c.fetchall()
+			return render_template("view_po_results.html",error = error,title = 'Search Results',form=form,rows = rows)
+
+		if pono=="" and invoice_no=="" and fpn=="":
+			c.execute("select * from MS_PO_MASTER WHERE porf=?",(porf,))
+			rows = c.fetchall()
+			return render_template("view_po_results.html",error = error,title = 'Search Results',form=form,rows = rows)
+
+		if invoice_no=="" and porf=="" and fpn=="":
+			c.execute("select * from MS_PO_MASTER WHERE pono=?",(pono,))
+			rows = c.fetchall()
+			return render_template("view_po_results.html",error = error,title = 'Search Results',form=form,rows = rows)
+
+
 	return render_template("view_po.html",error = error,title = 'View PO',form=form)
 
 @app.route('/viewfpn',methods = ['GET','POST'])
@@ -170,6 +200,19 @@ def viewpo():
 def viewfpn():
 	error = None
 	form = view_fpn_form()
+
+	conn = connect_db()
+	c = conn.cursor()
+
+	if form.validate_on_submit():
+		fpn = form.view_fpn_fpn.data
+
+		c.execute("select * from MS_FPN_MASTER WHERE fpn=?",(fpn,))
+		rows = c.fetchall()
+
+		return render_template("view_fpn_results.html",error = error,title = 'Search Results',form=form,rows = rows)
+
+
 
 	return render_template("view_fpn.html",error = error,title = 'View FPN',form=form)
 
