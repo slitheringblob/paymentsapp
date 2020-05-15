@@ -40,10 +40,10 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Update PO</a></li>
-          <li><a href="#">Update FPN</a></li>
-          <li><a href="#">Update Holiday</a></li>
-          <li><a href="#">Update Employee</a></li>
+          <li><a href="/updatepo">Update PO</a></li>
+          <li><a href="/updatefpn">Update FPN</a></li>
+          <li><a href="/updateholiday">Update Holiday</a></li>
+          <li><a href="/updateemployee">Update Employee</a></li>
         </ul>
       </li>
     </ul>
@@ -52,11 +52,9 @@
     </ul>
   </div>
 </nav>
+
 <div class="container-fluid">
 	
-
-
-
 	<div class="row">
 		{% with messages = get_flashed_messages(with_categories=true)%}
     		{%if messages %}
@@ -67,12 +65,14 @@
       			{% endfor %}
     		{% endif %}
   		{%endwith%}
+  	</div>
 
-		<div class="col-sm-4">.col-sm-4</div>
-		<div class="col-sm-4">.col-sm-4</div>
-		<div class="col-sm-4">.col-sm-4</div>
 
-	</div>
+	<div class="col-sm-4">.col-sm-4</div>
+	<div class="col-sm-4">.col-sm-4</div>
+	<div class="col-sm-4">.col-sm-4</div>
+
+	
 </div>
 
 

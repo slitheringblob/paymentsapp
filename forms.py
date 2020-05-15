@@ -78,4 +78,32 @@ class view_fpn_form(FlaskForm):
 #view holiday will just be a list that is directly rendered over the layout by jinja.
 #class view_holiday_form(FlaskForm):
 
-#####################################################################################################################################################
+############################### Update Classes ################################################
+
+############################### Search Form Classes #############################################
+class update_po_search_form(FlaskForm):
+
+	update_po_pono = StringField('PO Number')
+	update_po_porf = StringField('PORF')
+	update_po_fpn = StringField('FPN')
+	update_po_invoice_no = StringField('Invoice Number')
+	update_po_submit = SubmitField("Find")
+
+class update_employee_search_form(FlaskForm):
+
+	update_emp_code = StringField('Employee Code',validators = [DataRequired()])
+	update_emp_name = StringField('Employee Name')
+	update_emp_submit = SubmitField('Find')
+
+class update_fpn_search_form(FlaskForm):
+
+	update_fpn_fpn = StringField('FPN',validators = [DataRequired()])
+	update_fpn_submit = SubmitField('Find')
+
+class update_holiday_search_form(FlaskForm):
+
+	update_holiday_date = StringField('Date',validators = [DataRequired()])
+	update_holiday_submit = SubmitField('Find') 
+
+################################ Update Item Forms #####################################################################
+

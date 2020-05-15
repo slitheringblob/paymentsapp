@@ -3,6 +3,7 @@ from functools import wraps
 import sqlite3
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
 from forms import view_po_form,view_fpn_form
+from forms import update_po_search_form,update_employee_search_form,update_fpn_search_form
 
 
 app=Flask(__name__)
@@ -172,6 +173,10 @@ def viewpo():
 	c = conn.cursor()
 
 	if form.validate_on_submit():
+
+		if pono=="" and porf=="" and fpn=="" and invoice_no=="":
+			return render_template("view_po.html",error = error,title = 'View PO',form=form)
+		
 		if pono=="" and porf=="" and fpn=="":
 			c.execute("select * from MS_PO_MASTER WHERE invoice_no=?",(invoice_no,))
 			rows = c.fetchall()
@@ -238,6 +243,45 @@ def viewholiday():
 	rows = c.fetchall()
 
 	return render_template("view_holiday.html",error = error,title = 'View Holiday',rows = rows)
+
+######################################### Update Functionality ##############################################################
+
+@app.route('/updatepo',methods=['GET','POST'])
+@login_required
+
+def updatepo():
+	error = None
+	form = update_po_search_form()
+
+	return render_template("update_po_search.html",error = error,title = "Find PO",form = form)
+
+@app.route('/updatefpn',methods=['GET','POST'])
+@login_required
+
+def updatefpn():
+	pass
+
+@app.route('/updateholiday',methods=['GET','POST'])
+@login_required
+
+def updateholiday():
+	pass
+
+@app.route('/updateemployee',methods=['GET','POST'])
+@login_required
+
+def updateemployee():
+	pass
+
+
+
+
+
+
+
+
+
+
 
 
 ####################################### END ROUTES ##########################################################################
