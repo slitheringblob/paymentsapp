@@ -1,0 +1,293 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron p-3">
+				<h3><b> Employees  </b><button class="btn btn-success float-right" data-toggle="modal" data-target = "#addEMPmodal"> Add new Employee </button></h3>
+
+				<table class="table table-bordered table-hover table-dark">
+					<tr>
+						<th align="center">ID</th>
+						<th align="center">Emp. Code</th>
+						<th align="center">Employee Name</th>
+						<th align="center">Action</th>
+
+					</tr>
+
+					{% for row in rows %}
+					<tr>
+						<td>{{row[0]}}</td>
+						<td>{{row[1]}}</td>
+						<td>{{row[2]}}</td>
+						<td>
+							<a href="/update/{{row[0]}}" class="btn btn-warning" data-toggle="modal" data-target="#updateEMPmodal{{row[0]}}"> Update </a>
+							<a href="#" class="btn btn-danger" onclick="return confirm('Are you Sure?')"> Delete </a>
+
+
+
+						</td>
+					</tr>
+					
+				
+
+		<div id="updateEMPmodal{{row[0]}}" class="modal fade" role="dialog">
+   			<div class="modal-dialog">
+      			<div class="modal-content">
+         			<div class="modal-header">
+ 
+            			<h4 class="modal-title">Update Employee</h4>
+         			</div>
+         		<div class="modal-body">
+ 
+            		<form action="{{url_for('updateemployee')}}" method="POST">
+ 
+ 
+               		<div class="form-group">
+ 
+                  		<label>Emp Code:</label>
+                  		<input type="text" class="form-control" name="emp_code" required="1" value="{{row[1]}}">
+ 
+ 
+               		</div>
+
+
+ 
+ 
+                	<div class="form-group">
+ 
+ 
+                  		<label>Employee Name:</label>
+                  		<input type="text" class="form-control" name="emp_name" required="1" value="{{row[2]}}">
+ 
+ 
+               		</div>
+ 
+ 
+                	<div class="form-group">
+ 
+ 
+                  		<label>Vendor:</label>
+                  		<input type="text" class="form-control" name="vendor" required="1" value="{{row[3]}}">
+ 
+ 
+               		</div>
+
+               		<div class="form-group">
+ 
+ 
+                  		<label>Joining Date:</label>
+                  		<input type="text" class="form-control" name="joining_date" required="1" value="{{row[4]}}">
+ 
+ 
+               		</div>
+                	
+                	<div class="form-group">
+ 
+ 
+                  		<label>Rate:</label>
+                  		<input type="text" class="form-control" name="rate" required="1" value="{{row[5]}}">
+ 
+ 
+               		</div>
+
+
+               		<div class="form-group">
+ 
+ 
+                  		<label>Status:</label>
+                  		<input type="text" class="form-control" name="status" required="1" value="{{row[6]}}">
+ 
+ 
+               		</div>
+
+                	<div class="form-group">
+ 
+ 
+                  		<label>Manager:</label>
+                  		<input type="text" class="form-control" name="manager" required="1" value="{{row[7]}}">
+ 
+ 
+               		</div>
+ 
+ 
+                	
+               		
+
+               		
+ 
+ 
+ 
+               		<div class="form-group">
+ 
+ 
+                  		<button class="btn btn-success" type="submit">Update Employee</button>
+ 
+ 
+               		</div>
+
+ 
+ 
+            		</form>
+            	</div>
+
+            	<div class="modal-footer">
+ 
+ 
+            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+ 
+ 
+         		</div>
+            	
+            </div>
+ 
+ 
+         
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+
+	
+   {% endfor %}
+
+	</table>
+
+
+
+
+				
+			</div>
+
+		<div id="addEMPmodal" class="modal fade" role="dialog">
+   			<div class="modal-dialog">
+      			<div class="modal-content">
+         			<div class="modal-header">
+ 
+            			<h4 class="modal-title">Add Employee</h4>
+         			</div>
+         		<div class="modal-body">
+ 
+            		<form action="{{ url_for("updateemptest")}}" method="POST">
+ 
+ 
+               		<div class="form-group">
+ 
+                  		<label>Emp Code:</label>
+                  		<input type="text" class="form-control" name="emp_code" required="1">
+ 
+ 
+               		</div>
+
+
+ 
+ 
+                		<div class="form-group">
+ 
+ 
+                  		<label>Employee Name:</label>
+                  		<input type="text" class="form-control" name="emp_name" required="1">
+ 
+ 
+               		</div>
+ 
+ 
+                		<div class="form-group">
+ 
+ 
+                  		<label>Joining Date:</label>
+                  		<input type="text" class="form-control" name="joining_date" required="1">
+ 
+ 
+               		</div>
+ 
+ 
+                		<div class="form-group">
+ 
+ 
+                  		<label>Manager:</label>
+                  		<input type="text" class="form-control" name="manager" required="1">
+ 
+ 
+               		</div>
+ 
+ 
+                	<div class="form-group">
+ 
+ 
+                  		<label>Vendor:</label>
+                  		<input type="text" class="form-control" name="vendor" required="1">
+ 
+ 
+               		</div>
+               		<div class="form-group">
+ 
+ 
+                  		<label>Rate:</label>
+                  		<input type="text" class="form-control" name="rate" required="1">
+ 
+ 
+               		</div>
+
+               		<div class="form-group">
+ 
+ 
+                  		<label>Status:</label>
+                  		<input type="text" class="form-control" name="status" required="1">
+ 
+ 
+               		</div>
+ 
+ 
+ 
+               		<div class="form-group">
+ 
+ 
+                  		<button class="btn btn-success" type="submit">Add Employee</button>
+ 
+ 
+               		</div>
+
+ 
+ 
+            		</form>
+            	</div>
+
+            	<div class="modal-footer">
+ 
+ 
+            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+ 
+ 
+         		</div>
+            	
+            </div>
+ 
+ 
+         
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+ 
+ 
+</div>
+ 
+ 
+ 
+ 
+ 
+        </div>
+ 
+    </div>
+
+
+
+
+{% endblock %}

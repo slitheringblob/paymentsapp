@@ -3,10 +3,10 @@
 <head>
 	<title>VPT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}" >
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/static/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 
     {% block css %} {% endblock %}
 </head>
@@ -21,7 +21,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="/dashboard">Dashboard</a></li>
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="">Add
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/addnewpo">Add new PO</a></li>
@@ -40,8 +40,8 @@
           <li><a href="/viewemployee">View Employee</a></li>
         </ul>
       </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Update
+     <!--  <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="updatetest">Update
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/updatepo">Update PO</a></li>
@@ -49,7 +49,9 @@
           <li><a href="/updateholiday">Update Holiday</a></li>
           <li><a href="/updateemployee">Update Employee</a></li>
         </ul>
-      </li>
+      </li> -->
+      <li><a href="/updatetest">Update</a></li>
+    
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="/logout">LogOut</a></li>
@@ -57,15 +59,23 @@
   </div>
 </nav>
 <div class="container-fluid">
-  {% with messages = get_flashed_messages(with_categories=true)%}
-    {%if messages %}
-      {% for category,message in messages %}
-        <div class="alert alert-{{category}}">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissable" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">x</span>
+          </button>
+ 
+ 
           {{message}}
+ 
+ 
         </div>
       {% endfor %}
+ 
     {% endif %}
-  {%endwith%}
+  {% endwith %}
   
   {%block content %}{% endblock %}
   

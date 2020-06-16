@@ -11,11 +11,11 @@
     </div>
 
     <div class="row" style="padding: 25px">
-      <div class="formwrapper">
+      <!-- <div class="formwrapper">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
-<!-- ######################column-1############################################ -->
-            <div class="col-sm-6">
+ ######################column-1############################################
+             <div class="col-sm-6">
               <br>
               <br>
               <div class="form-field" padding-left=5px>
@@ -36,7 +36,39 @@
             </div>
             
           </form>
-        </div>
+        </div> -->
+
+        <div class="row">
+    <div class="row" style="padding: 25px">
+      <table class="table table-bordered table-dark table-hover">  
+        <thead class="thead-dark">
+          <td>#</td>
+          <td>FPN</td>  
+          <td>FPN Description</td>  
+          <td>Resource Duration</td> 
+          <td>Amount</td> 
+          <td>Opening Balance</td>
+          <td>Amount Utilized</td>
+          <td>Remaining Amount</td>
+        </thead>  
+      
+        {% for row in rows %} 
+      
+          <tr>  
+              <td>{{row[0]}}</td>  
+              <td>{{row[1]}}</td>  
+              <td>{{row[2]}}</td>  
+              <td>{{row[3]}}</td>
+              <td>{{row[4]}}</td>
+              <td>{{row[5]}}</td>
+              <td>{{row[6]}}</td>
+              <td>{{row[7]}}</td>
+          </tr>  
+      
+        {% endfor %}  
+      </table>
+    </div>
+  </div>
       </div>
 
     

@@ -10,7 +10,7 @@
       <br>
     </div>
 
-    <div class="row" >
+    <div class="row" style="padding: 25px">
       <div class="formwrapper">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
@@ -30,10 +30,10 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.amount.label(class="form-control-label") }}: {{ form.amount(class="form-control form-control-lg") }}
-                {% if form.amount.errors %}
+              {{ form.opening_balance.label(class="form-control-label") }}: {{ form.opening_balance(class="form-control form-control-lg") }}
+                {% if form.opening_balance.errors %}
                   <ul class="errors">
-                    {% for error in form.amount.errors %}
+                    {% for error in form.opening_balance.errors %}
                       <li>{{ error }}</li>
                     {% endfor %}
                   </ul>
@@ -47,6 +47,19 @@
                 {% if form.remaining_amount.errors %}
                   <ul class="errors">
                     {% for error in form.remaining_amount.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="form-field" padding-left=5px>
+              {{ form.amount_utilized.label(class="form-control-label") }}: {{ form.amount_utilized(class="form-control form-control-lg") }}
+                {% if form.amount_utilized.errors %}
+                  <ul class="errors">
+                    {% for error in form.amount_utilized.errors %}
                       <li>{{ error }}</li>
                     {% endfor %}
                   </ul>
@@ -98,9 +111,10 @@
             </div>
 
             <br>
-            <br>
+            <br><br><br>
 
-            {{form.add_fpn(class="btn btn-primary")}}
+            {{form.add_fpn(class="btn btn-primary" )}}
+            
             
           </div>
 <!-- ######################column-3############################################ -->
@@ -119,10 +133,10 @@
             <br>
 
             <div class="form-field" padding-left=5px>
-              {{ form.opening_balance.label(class="form-control-label") }}: {{ form.opening_balance(class="form-control form-control-lg")}}
-                {% if form.opening_balance.errors %}
+              {{ form.amount.label(class="form-control-label") }}: {{ form.amount(class="form-control form-control-lg") }}
+                {% if form.amount.errors %}
                   <ul class="errors">
-                    {% for error in form.opening_balance.errors %}
+                    {% for error in form.amount.errors %}
                       <li>{{ error }}</li>
                     {% endfor %}
                   </ul>

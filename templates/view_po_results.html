@@ -4,13 +4,25 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <h2 align="center">View PO</h2>
+      <h2 align="center">List of Raised PO's</h2>
       <br>
       <br>
       <br>
     </div>
 
     <div class="row">
+    {% with messages = get_flashed_messages(with_categories=true)%}
+        {%if messages %}
+            {% for category,message in messages %}
+              <div class="alert alert-{{category}}">
+                {{message}}
+              </div>
+            {% endfor %}
+        {% endif %}
+      {%endwith%}
+    </div>
+    <br><br>
+    <div class="row" style="padding: 25px">
     <div class="row" style="padding: 25px">
       <table class="table table-bordered table-dark table-hover">  
         <thead class="thead-dark">
