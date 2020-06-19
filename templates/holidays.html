@@ -1,0 +1,192 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron p-3">
+				<h3><b> Holidays  </b><button class="btn btn-success float-right" data-toggle="modal" data-target = "#addHolidayModal"> Add new Holiday </button></h3>
+
+				<table class="table table-bordered table-hover table-dark">
+					<tr>
+						<th align="center">ID</th>
+						<th align="center">Date</th>
+						<th align="center">Reason</th>
+						<th align="center">Action</th>
+
+					</tr>
+
+					{% for row in rows %}
+					<tr>
+						<td>{{row[0]}}</td>
+						<td>{{row[1]}}</td>
+						<td>{{row[2]}}</td>
+						<td>
+							<a href="/update/{{row[0]}}" class="btn btn-warning" data-toggle="modal" data-target="#updateHolidayModal{{row[0]}}"> Update </a>
+							<a href="#" class="btn btn-danger" onclick="return confirm('Are you Sure?')"> Delete </a>
+
+
+
+						</td>
+					</tr>
+					
+				
+
+		<div id="updateHolidayModal{{row[0]}}" class="modal fade" role="dialog">
+   			<div class="modal-dialog">
+      			<div class="modal-content">
+         			<div class="modal-header">
+ 
+            			<h4 class="modal-title">Update Holiday</h4>
+         			</div>
+         		<div class="modal-body">
+ 
+            		<form action="{{url_for('updateholiday')}}" method="POST">
+ 
+ 
+               		<div class="form-group">
+ 
+                  		<label>Date:</label>
+                  		<input type="text" class="form-control" name="date" required="1" value="{{row[1]}}">
+ 
+ 
+               		</div>
+
+
+ 
+ 
+                	<div class="form-group">
+ 
+ 
+                  		<label>Reason:</label>
+                  		<input type="text" class="form-control" name="reason" required="1" value="{{row[2]}}">
+ 
+ 
+               		</div>
+ 
+
+                  <div class="form-group">
+ 
+ 
+                  		<button class="btn btn-success" type="submit">Update Holiday</button>
+ 
+ 
+               		</div>
+
+ 
+ 
+            		</form>
+            	</div>
+
+            	<div class="modal-footer">
+ 
+ 
+            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+ 
+ 
+         		</div>
+            	
+            </div>
+ 
+ 
+         
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+
+	
+   {% endfor %}
+
+	</table>
+
+
+
+
+				
+			</div>
+
+		<div id="addHolidayModal" class="modal fade" role="dialog">
+   			<div class="modal-dialog">
+      			<div class="modal-content">
+         			<div class="modal-header">
+ 
+            			<h4 class="modal-title">Add Holiday</h4>
+         			</div>
+         		<div class="modal-body">
+ 
+            		<form action="{{ url_for("addholiday")}}" method="POST">
+ 
+ 
+               		<div class="form-group">
+ 
+                  		<label>Date:</label>
+                  		<input type="text" class="form-control" name="date" required="1">
+ 
+ 
+               		</div>
+
+
+ 
+ 
+                		<div class="form-group">
+ 
+ 
+                  		<label>Reason:</label>
+                  		<input type="text" class="form-control" name="reason" required="1">
+ 
+ 
+               		</div>
+ 
+                		
+ 
+               		<div class="form-group">
+ 
+ 
+                  		<button class="btn btn-success" type="submit">Add Holiday</button>
+ 
+ 
+               		</div>
+
+ 
+ 
+            		</form>
+            	</div>
+
+            	<div class="modal-footer">
+ 
+ 
+            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+ 
+ 
+         		</div>
+            	
+            </div>
+ 
+ 
+         
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+ 
+ 
+</div>
+ 
+ 
+ 
+ 
+ 
+        </div>
+ 
+    </div>
+
+
+
+
+{% endblock %}

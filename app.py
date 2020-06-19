@@ -304,26 +304,41 @@ def viewholiday():
 
 ######################################### Update Functionality ##############################################################
 
-@app.route('/updatepo',methods=['GET','POST'])
+# @app.route('/updatepo',methods=['GET','POST'])
+# @login_required
+
+# def updatepo():
+
+# 	return render_template("update_po_search.html", title="Update PO")
+
+
+
+# @app.route('/updatefpn',methods=['GET','POST'])
+# @login_required
+
+# def updatefpn():
+# 	pass
+
+# @app.route('/updateholiday',methods=['GET','POST'])
+# @login_required
+
+# def updateholiday():
+# 	pass
+
+############################################################### Employees New Code #####################################################################################################################################
+
+
+@app.route('/employees',methods = ['GET','POST'])
 @login_required
+def employees():
+	conn = connect_db()
+	c = conn.cursor()
+	c.execute("select * from MS_EMP_MASTER")
+	rows = c.fetchall()
 
-def updatepo():
-
-	return render_template("update_po_search.html", title="Update PO")
+	return render_template("employees.html", rows=rows, title="Employees")
 
 
-
-@app.route('/updatefpn',methods=['GET','POST'])
-@login_required
-
-def updatefpn():
-	pass
-
-@app.route('/updateholiday',methods=['GET','POST'])
-@login_required
-
-def updateholiday():
-	pass
 
 @app.route('/updateemployee',methods=['GET','POST'])
 @login_required
@@ -346,17 +361,13 @@ def updateemployee():
 		conn.commit()
 		conn.close()
 
-		return render_template("update_test.html",title = "VPT- Update")
+	return redirect(url_for('employees'))
 
 
 
-
-
-
-
-@app.route('/updateemptest',methods = ['GET','POST'])
+@app.route('/addemployee',methods = ['GET','POST'])
 @login_required
-def updateemptest():
+def addemployee():
 	
 	if request.method == "POST":
 
@@ -374,25 +385,126 @@ def updateemptest():
 		conn.commit()
 		conn.close()
 
-	return render_template("update_test.html",title = "Update")
+	return redirect(url_for('employees'))
 
-@app.route('/employees',methods = ['GET','POST'])
+
+
+#################################################### Holidays new Code #################################################################################
+
+@app.route('/holidays',methods = ['GET','POST'])
 @login_required
-def updatetest():
+def holidays():
 	conn = connect_db()
 	c = conn.cursor()
-	c.execute("select * from MS_EMP_MASTER")
+	c.execute("select * from MS_HOLIDAY_MASTER")
 	rows = c.fetchall()
 
-	return render_template("employees.html", rows=rows, title="Employees")
+	return render_template("holidays.html", rows=rows, title="Holidays")
 
 
+@app.route('/addholiday',methods = ['GET','POST'])
+@login_required
 
 
+def addholiday():
+
+	if request.method == 'POST':
+		conn = connect_db()
+		c = conn.cursor()
+
+		date = request.form["date"]
+		reason = request.form["reason"]
+
+		c.execute("INSERT INTO MS_HOLIDAY_MASTER(date,reason) VALUES(?,?)",(date,reason,))
+		conn.commit()
+		conn.close()
+
+	return redirect(url_for('holidays'))
 
 
+@app.route('/updateholiday',methods = ['GET','POST'])
+@login_required
+
+def updateholiday():
+
+	if request.method == "POST":
+
+		conn = connect_db()
+		c = conn.cursor()
+
+		date = request.form["date"]
+		reason = request.form["reason"]
+
+		c.execute("UPDATE MS_HOLIDAY_MASTER SET date=?,reason=? WHERE date=?",(date,reason,date,))
+		conn.commit()
+		conn.close()
+
+	return redirect(url_for('holidays'))
+
+########################################## FPN new Code ##########################################################################
+
+@app.route('/fpn',methods = ['GET','POST'])
+@login_required
+def fpn():
+	conn = connect_db()
+	c = conn.cursor()
+	c.execute("select * from MS_FPN_MASTER")
+	rows = c.fetchall()
+
+	return render_template("fpn.html", rows=rows , title="FPN")
 
 
+@app.route('/addfpn',methods = ['GET','POST'])
+@login_required
+def addfpn():
+
+	if request.method == "POST":
+		
+		conn = connect_db()
+		c = conn.cursor()
+
+		fpn = request.form["fpn"]
+		fpn_description = request.form["fpn_description"]
+		resource_duration = request.form["resource_duration"]
+		amount = request.form["amount"]
+		vendor = request.form["vendor"]
+		opening_balance = request.form["opening_balance"]
+		amount_utilized = request.form["amount_utilized"]
+		remaining_amount = request.form["remaining_amount"]
+		go_live = request.form["go_live"]
+		remarks = request.form["remarks"]
+		
+
+		c.execute("INSERT INTO MS_FPN_MASTER(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks) VALUES(?,?,?,?,?,?,?,?,?,?)",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,))
+		conn.commit()
+		conn.close()
+	return redirect(url_for('fpn'))
+
+@app.route('/updatefpn',methods = ['GET','POST'])
+@login_required
+
+def updatefpn():
+	 
+	if request.method == "POST":
+		conn = connect_db()
+		c = conn.cursor()
+
+		fpn = request.form["fpn"]
+		fpn_description = request.form["fpn_description"]
+		resource_duration = request.form["resource_duration"]
+		amount = request.form["amount"]
+		vendor = request.form["vendor"]
+		opening_balance = request.form["opening_balance"]
+		amount_utilized = request.form["amount_utilized"]
+		remaining_amount = request.form["remaining_amount"]
+		go_live = request.form["go_live"]
+		remarks = request.form["remarks"]
+		c.execute("UPDATE MS_FPN_MASTER SET fpn=?,fpn_description=?,resource_duration=?,amount=?,vendor=?,opening_balance=?,amount_utilized=?,remaining_amount=?,go_live=?,remarks=? WHERE fpn=?",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,fpn,))
+		conn.commit()
+		conn.close()
+	return redirect(url_for('fpn'))
+
+#########################################################  PO New Code ############################################################################
 
 
 
@@ -401,6 +513,8 @@ def updatetest():
 
 
 ####################################### END ROUTES ##########################################################################
+
+
 
 def connect_db():
 	conn = sqlite3.connect(database)
@@ -411,5 +525,5 @@ def connect_db():
 
 
 if __name__=='__main__':
-	app.run(debug=True)
+	app.run(debug=1)
 
