@@ -376,7 +376,7 @@ def updateemptest():
 
 	return render_template("update_test.html",title = "Update")
 
-@app.route('/updatetest',methods = ['GET','POST'])
+@app.route('/employees',methods = ['GET','POST'])
 @login_required
 def updatetest():
 	conn = connect_db()
@@ -384,7 +384,7 @@ def updatetest():
 	c.execute("select * from MS_EMP_MASTER")
 	rows = c.fetchall()
 
-	return render_template("update_test.html", rows=rows, title="VPT")
+	return render_template("employees.html", rows=rows, title="Employees")
 
 
 
