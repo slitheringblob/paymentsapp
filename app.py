@@ -1,4 +1,4 @@
-from flask import Flask,render_template,redirect,url_for,request,session,flash,g
+from flask import Flask,render_template,redirect,url_for,request,session,flash
 from functools import wraps
 import sqlite3
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
@@ -23,7 +23,7 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
-############################################################################################# 
+#############################################################################################p;i
 ##############################################    ROUTES    #################################
 
 @app.route('/')
@@ -302,28 +302,7 @@ def viewholiday():
 
 	return render_template("view_holiday.html",error = error,title = 'View Holiday',rows = rows)
 
-######################################### Update Functionality ##############################################################
 
-# @app.route('/updatepo',methods=['GET','POST'])
-# @login_required
-
-# def updatepo():
-
-# 	return render_template("update_po_search.html", title="Update PO")
-
-
-
-# @app.route('/updatefpn',methods=['GET','POST'])
-# @login_required
-
-# def updatefpn():
-# 	pass
-
-# @app.route('/updateholiday',methods=['GET','POST'])
-# @login_required
-
-# def updateholiday():
-# 	pass
 
 ############################################################### Employees New Code #####################################################################################################################################
 
@@ -506,6 +485,84 @@ def updatefpn():
 
 #########################################################  PO New Code ############################################################################
 
+@app.route('/po',methods = ['GET','POST'])
+@login_required
+
+def po():
+	conn = connect_db()
+	c = conn.cursor()
+	c.execute("select * from MS_PO_MASTER")
+	rows = c.fetchall()
+
+	return render_template("po.html", rows=rows , title="PO")
+
+@app.route('/addpo',methods = ['GET','POST'])
+@login_required
+
+def addpo():
+	
+	if request.method == "POST":
+		conn = connect_db()
+		c = conn.cursor()
+
+		resource_name = request.form["resource_name"]
+		po_vendor = request.form["po_vendor"]
+		month = request.form["month"]
+		noofdays = request.form["noofdays"]
+		leavestaken = request.form["leavestaken"]
+		billeddays = request.form["billeddays"]
+		billingrate = request.form["billingrate"]
+		billableamount = request.form["billableamount"]
+		gst = request.form["gst"]
+		total = request.form["total"]
+		fpn = request.form["fpn"]
+		porf = request.form["porf"]
+		project = request.form["project"]
+		date_raised = request.form["date_raised"]
+		pono = request.form["pono"]
+		invoice_no = request.form["invoice_no"]
+		golive_date = request.form["golive_date"]
+
+		
+		c.execute("INSERT INTO MS_PO_MASTER(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+
+	return redirect(url_for('po'))
+
+
+
+
+@app.route('/updatepo', methods = ['GET','POST'])
+@login_required
+
+def updatepo():
+	if request.method =="POST":
+
+		conn = connect_db()
+		c = conn.cursor()
+
+		resource_name = request.form["resource_name"]
+		po_vendor = request.form["po_vendor"]
+		month = request.form["month"]
+		noofdays = request.form["noofdays"]
+		leavestaken = request.form["leavestaken"]
+		billeddays = request.form["billeddays"]
+		billingrate = request.form["billingrate"]
+		billableamount = request.form["billableamount"]
+		gst = request.form["gst"]
+		total = request.form["total"]
+		fpn = request.form["fpn"]
+		porf = request.form["porf"]
+		project = request.form["project"]
+		date_raised = request.form["date_raised"]
+		pono = request.form["pono"]
+		invoice_no = request.form["invoice_no"]
+		golive_date = request.form["golive_date"]
+
+		c.execute("UPDATE MS_PO_MASTER SET resource_name=?,po_vendor=?,month=?,noofdays=?,leavestaken=?,billeddays=?,billingrate=?,billableamount=?,gst=?,total=?,fpn=?,porf=?,project=?,date_raised=?,pono=?,invoice_no=?,golive_date=?",(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+		conn.commit()
+		conn.close()
+
+	return redirect(url_for('po'))
 
 
 
@@ -513,7 +570,6 @@ def updatefpn():
 
 
 ####################################### END ROUTES ##########################################################################
-
 
 
 def connect_db():

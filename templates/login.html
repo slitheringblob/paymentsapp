@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<title>VPT-Login</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="static/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  		<script src="static/bootstrap.min.js"></script>
-  		<link rel="stylesheet" type="text/css" href="/static/login.css">
+  <title>VPT-Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}" >
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" >
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='sb-admin-2.css')}}"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 </head>
-<body>
+
+<body class="bg-dark">
 	<div class="container-fluid">
-		<h1 align="center">Vendor Payment Tracker</h1>
+		
 		<br><br><br>
   		
-  		<div class="row">
-  			
-			<div class="col-sm-12"	>
-				<form class="form-signin" action="" method="POST">
+  	<div class="row">
+  		<div class="col-sm-4"></div>	
+			<div class="col-sm-4">
+				
+        <div class="card border-info mb-4 text-center">
 
-  						<h2 class="h3 mb-3 font-weight-normal" align="center">Please Sign In</h1>
-  						<label for="inputUsername" class="sr-only">Username:</label>
-  						<input type="text" name="username" class="form-control" placeholder="Username" value="{{request.form.username }}"required autofocus>
-  						<label for="inputPassword" class="sr-only">Password:</label>
-  						<input type="password" name="password" class="form-control" placeholder="Password" value="{{request.form.password }}" required>
-  						<br>
-  						<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>				
-				</form>
+          <div class="card-header">Vendor Payment Tracker       
+          </div>
+
+          <div class="card-body">
+          <form class="form-signin" action="" method="POST">
+
+    						<h2 class="h3 mb-3 font-weight-normal" align="center">Please Sign In</h1><br><br>
+    						<label for="inputUsername" class="sr-only">Username:</label>
+    						<input type="text" name="username" class="form-control" placeholder="Username" value="{{request.form.username }}"required autofocus><br>
+    						<label for="inputPassword" class="sr-only">Password:</label>
+    						<input type="password" name="password" class="form-control" placeholder="Password" value="{{request.form.password }}" required>
+    						<br>
+    						<button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>				
+  				</form>
 
 				{% if error %}
-        		<p class="error" align="center"><strong>Error:</strong> {{ error }}
+        		<p class="error" align="center"><strong>Error: </strong> {{ error }}
       			{% endif %}
       			</p>
       			<p class="flash_msg">
@@ -37,9 +52,21 @@
       				{% endfor %}
       			</p>
 
+            </div>
+
 			</div>
-		</div>
+      </div>
+		  
+      <div class="col-sm-4"></div>
+
+
+    </div>
+
+
 
 	</div>	
+
 </body>
+
+
 </html>

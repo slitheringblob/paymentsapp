@@ -2,90 +2,90 @@
 <html>
 <head>
 	<title>VPT-Dashboard</title>
+
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.css" type="text/css" rel="stylesheet">
-    <link href="/static/dashboard.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/static/bootstrap.min.js"></script>
+    <!-- <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}" > -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}" >
+    <link href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-inverse bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/dashboard" style="color: red">Vendor Payment Tracker</a>
+
+
+
+
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Vendor Payment Tracker</div>
+      <div class="list-group list-group-flush">
+        <a href="/dashboard" class="list-group-item list-group-item-action list-group-item-info">Dashboard</a>
+        <a href="/po" class="list-group-item list-group-item-action list-group-item-primary">Purchase Orders</a>
+        <a href="/employees" class="list-group-item list-group-item-action list-group-item-primary">Employees</a>
+        <a href="/fpn" class="list-group-item list-group-item-action list-group-item-primary">FPN</a>
+        <a href="/holidays" class="list-group-item list-group-item-action list-group-item-primary">Holidays</a>
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Status</a> -->
+      </div>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/dashboard">Dashboard</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/addnewpo">Add new PO</a></li>
-          <li><a href="/addnewfpn">Add new FPN</a></li>
-          <li><a href="/addnewholiday">Add new Holiday</a></li>
-          <li><a href="/addnewemployee">Add new Employee</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">View
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/viewpo">View PO</a></li>
-          <li><a href="/viewfpn">View FPN</a></li>
-          <li><a href="/viewholiday">View Holiday</a></li>
-          <li><a href="/viewemployee">View Employee</a></li>
-        </ul>
-      </li>
-      <!-- <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="/updatetest">Update
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/updatepo">Update PO</a></li>
-          <li><a href="/updatefpn">Update FPN</a></li>
-          <li><a href="/updateholiday">Update Holiday</a></li>
-          <li><a href="/updateemployee">Update Employee</a></li>
-        </ul>
-      </li> -->
-      <li><a href="/employees">Employees</a></li>
-      <li><a href="/holidays">Holidays</a></li>
-      <li><a href="/fpn">FPN</a></li>
-      
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout">LogOut</a></li>
-    </ul>
-  </div>
-</nav>
+    <!-- /#sidebar-wrapper -->
 
-<div class="container-fluid">
-	
-	<div class="row">
-		{% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-success alert-dismissable" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="close">
-            <span aria-hidden="true">x</span>
-          </button>
- 
- 
-          {{message}}
- 
- 
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-inverse bg-dark border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
         </div>
-      {% endfor %}
- 
-    {% endif %}
-  {% endwith %}
-  	</div>
+      </nav>
 
+      <div class="container-fluid">
+        {%block content %}{% endblock %}
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
 
-	<div class="col-sm-4">.col-sm-4</div>
-	<div class="col-sm-4">.col-sm-4</div>
-	<div class="col-sm-4">.col-sm-4</div>
+  </div>
+  <!-- /#wrapper -->
 
-	
-</div>
+  <!-- Bootstrap core JavaScript -->
+  <script src={{url_for('static',filename='vendor/jquery/jquery.min.js')}}></script>
+  <script src={{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
 
 
 
