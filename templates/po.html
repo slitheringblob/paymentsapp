@@ -3,401 +3,450 @@
 {% block content %}
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="jumbotron p-3">
-				<h3><b> Purchase Orders </b><button class="btn btn-primary" data-toggle="modal" data-target = "#addPOmodal"> Add new PO </button></h3>
 
-				<table class="table table-bordered table-hover table-dark">
-					<tr>
-						<th align="center">ID</th>
-						<th align="center">PORF</th>
-						<th align="center">Date Raised</th>
+    <div class="col-md-12">
+      <div class="jumbotron p-3">
+        <h3><b> Purchase Orders </b><button class="btn btn-primary" data-toggle="modal" data-target = "#addPOmodal"> Add new PO </button></h3>
+
+        <table class="table table-bordered table-hover table-dark">
+          <tr>
+            <th align="center">ID</th>
+            <th align="center">PORF</th>
+            <th align="center">Date Raised</th>
             <th align="center">PONO</th>
-						<th align="center">Action</th>
+            <th align="center">Action</th>
 
-					</tr>
+          </tr>
 
-	 {% for row in rows %}
-					<tr>
-						<td>{{row[0]}}</td>
-						<td>{{row[12]}}</td>
-						<td>{{row[14]}}</td>
+          {% for row in rows %}
+          <tr>
+            <td>{{row[0]}}</td>
+            <td>{{row[12]}}</td>
+            <td>{{row[14]}}</td>
             <td>{{row[15]}}</td>
-						<td>
-							<a href="/update/{{row[0]}}" class="btn btn-warning" data-toggle="modal" data-target="#updatePOmodal{{row[0]}}"> Update </a>
-							<a href="#" class="btn btn-danger" onclick="return confirm('Are you Sure?')"> Delete </a>
 
+            <td>
+              <a href="/update/{{row[0]}}" class="btn btn-warning" data-toggle="modal" data-target="#updatePOmodal{{row[0]}}"> Update </a>
+              <a href="/deletepo/{{row[0]}}" class="btn btn-danger" onclick="return confirm('Are you Sure?')"> Delete </a>
 
+            </td>
+          </tr>
 
-						</td>
-					</tr>
-					
-				
+          <div id="updatePOmodal{{row[0]}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
 
-		<div id="updatePOmodal{{row[0]}}" class="modal fade" role="dialog">
-   			<div class="modal-dialog">
-      			<div class="modal-content">
-         			<div class="modal-header">
- 
-            			<h4 class="modal-title">Update PO</h4>
-         			</div>
-         		<div class="modal-body">
- 
-            		<form action="{{url_for('updatepo')}}" method="POST">
- 
- 
-               		<div class="form-group">
- 
-                  		<label>Resource Name :</label>
-                  		<input type="text" class="form-control" name="resource_name" required="1" value="{{row[1]}}">
- 
- 
-               		</div>
+                  <h4 class="modal-title">Update PO</h4>
+                </div>
+              <div class="modal-body">
 
+                <form action="{{url_for('updatepo')}}" method="POST">
 
- 
- 
-                	<div class="form-group">
- 
- 
-                  		<label>Vendor :</label>
-                  		<input type="text" class="form-control" name="vendor" required="1" value="{{row[2]}}">
- 
- 
-               		</div>
- 
- 
-                	<div class="form-group">
- 
- 
-                  		<label>Month :</label>
-                  		<input type="text" class="form-control" name="month" required="1" value="{{row[3]}}">
- 
- 
-               		</div>
-
-               		<div class="form-group">
- 
- 
-                  		<label>No of Days:</label>
-                  		<input type="text" class="form-control" name="no_of_days" required="1" value="{{row[4]}}">
- 
- 
-               		</div>
-                	
-                	<div class="form-group">
- 
- 
-                  		<label>Leaves Taken:</label>
-                  		<input type="text" class="form-control" name="leaves_taken" required="1" value="{{row[5]}}">
- 
- 
-               		</div>
-
-
-               		<div class="form-group">
- 
- 
-                  		<label>Billed Days:</label>
-                  		<input type="text" class="form-control" name="biled_days" required="1" value="{{row[6]}}">
- 
- 
-               		</div>
 
                   <div class="form-group">
- 
- 
+
+                      <label>Resource Name :</label>
+                      <input type="text" class="form-control" name="resource_name" required="1" value="{{row[1]}}">
+
+
+                  </div>
+
+
+
+
+                  <div class="form-group">
+
+
+                      <label>Vendor :</label>
+                      <input type="text" class="form-control" name="vendor" required="1" value="{{row[2]}}">
+
+
+                  </div>
+
+
+                  <div class="form-group">
+
+
+                      <label>Month :</label>
+                      <input type="text" class="form-control" name="month" required="1" value="{{row[3]}}">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>No of Days:</label>
+                      <input type="text" class="form-control" name="no_of_days" required="1" value="{{row[4]}}">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>Leaves Taken:</label>
+                      <input type="text" class="form-control" name="leaves_taken" required="1" value="{{row[5]}}">
+
+
+                  </div>
+
+
+                  <div class="form-group">
+
+
+                      <label>Billed Days:</label>
+                      <input type="text" class="form-control" name="biled_days" required="1" value="{{row[6]}}">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
                       <label>Billing Rate:</label>
                       <input type="text" class="form-control" name="billing_rate" required="1" value="{{row[7]}}">
- 
- 
+
+
                   </div>
 
-                	<div class="form-group">
- 
- 
-                  		<label>Billable Amount:</label>
-                  		<input type="text" class="form-control" name="billable_amount" required="1" value="{{row[8]}}">
- 
- 
-               		</div>
+                  <div class="form-group">
+
+
+                      <label>Billable Amount:</label>
+                      <input type="text" class="form-control" name="billable_amount" required="1" value="{{row[8]}}">
+
+
+                  </div>
 
                   <div class="form-group">
- 
- 
+
+
                       <label>GST :</label>
                       <input type="text" class="form-control" name="gst" required="1" value="{{row[9]}}">
- 
- 
+
+
                   </div>
 
                   <div class="form-group">
- 
- 
+
+
                       <label>Total:</label>
                       <input type="text" class="form-control" name="total" required="1" value="{{row[10]}}">
- 
- 
+
+
                   </div>
 
                   <div class="form-group">
- 
- 
+
+
                       <label>FPN Used:</label>
                       <input type="text" class="form-control" name="" required="1" value="{{row[11]}}">
- 
- 
+
+
                   </div>
 
                   <div class="form-group">
-                    
+
                     <label>PORF:</label>
                     <input type="text" class="form-control" name="porf" required="1" value="{{row[12]}}">
 
                   </div>
 
                 <div class="form-group">
- 
- 
+
+
                       <label>Project:</label>
                       <input type="text" class="form-control" name="project" required="1" value="{{row[13]}}">
- 
- 
+
+
                 </div>
 
                 <div class="form-group">
-                    
+
                     <label>Date Raised:</label>
                     <input type="text" class="form-control" name="date_raised" required="1" value="{{row[14]}}">
 
                 </div>
 
                 <div class="form-group">
-                    
+
                     <label>PONO:</label>
                     <input type="text" class="form-control" name="porf" required="1" value="{{row[15]}}">
 
                 </div>
 
                 <div class="form-group">
-                    
+
                     <label>Invoice NO:</label>
                     <input type="text" class="form-control" name="invoice_no" required="1" value="{{row[16]}}">
 
                 </div>
 
                 <div class="form-group">
-                    
+
                     <label>Go Live Date:</label>
                     <input type="text" class="form-control" name="golive_date" required="1" value="{{row[17]}}">
 
                 </div>
 
-                	
-               		
 
-               		
- 
- 
- 
-               		<div class="form-group">
- 
- 
-                  		<button class="btn btn-success" type="submit">Update FPN </button>
- 
- 
-               		</div>
 
- 
- 
-            		</form>
-            	</div>
 
-            	<div class="modal-footer">
- 
- 
-            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
- 
- 
-         		</div>
-            	
+
+
+
+
+                  <div class="form-group">
+
+
+                      <button class="btn btn-success" type="submit">Update FPN </button>
+
+
+                  </div>
+
+
+
+                </form>
+              </div>
+
+              <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
             </div>
- 
- 
-         
- 
- 
+
+            </div>
+
+
+
+
+
       </div>
- 
- 
+
+
    </div>
 
-	
-   
-
-	</table>
+{% endfor %}
 
 
 
 
-				
-			</div>
-
-		<div id="addPOmodal" class="modal fade" role="dialog">
-   			<div class="modal-dialog">
-      			<div class="modal-content">
-         			<div class="modal-header">
- 
-            			<h4 class="modal-title">Add FPN</h4>
-         			</div>
-         		<div class="modal-body">
- 
-            		<form action="{{ url_for("addfpn")}}" method="POST">
- 
- 
-               		<div class="form-group">
- 
-                      <label>FPN :</label>
-                      <input type="text" class="form-control" name="fpn" required="1">
- 
- 
-                  </div>
-
-
- 
- 
-                  <div class="form-group">
- 
- 
-                      <label>FPN Description :</label>
-                      <input type="text" class="form-control" name="fpn_description" required="1">
- 
- 
-                  </div>
- 
- 
-                  <div class="form-group">
- 
- 
-                      <label>Resource Duration:</label>
-                      <input type="text" class="form-control" name="resource_duration" required="1">
- 
- 
-                  </div>
-
-                  <div class="form-group">
- 
- 
-                      <label>Amount:</label>
-                      <input type="text" class="form-control" name="amount" required="1">
- 
- 
-                  </div>
-                  
-                  <div class="form-group">
- 
- 
-                      <label>Vendor:</label>
-                      <input type="text" class="form-control" name="vendor" required="1">
- 
- 
-                  </div>
-
-
-                  <div class="form-group">
- 
- 
-                      <label>Opening Balance:</label>
-                      <input type="text" class="form-control" name="opening_balance" required="1">
- 
- 
-                  </div>
-
-                  <div class="form-group">
- 
- 
-                      <label>Amount Utilized:</label>
-                      <input type="text" class="form-control" name="amount_utilized" required="1">
- 
- 
-                  </div>
 
 
 
-                  <div class="form-group">
- 
- 
-                      <label>Remaining Amount:</label>
-                      <input type="text" class="form-control" name="remaining_amount" required="1">
- 
- 
-                  </div>
-
-                  <div class="form-group">
- 
- 
-                      <label>Go Live Date:</label>
-                      <input type="text" class="form-control" name="go_live" required="1">
- 
- 
-                  </div>
-
-                  <div class="form-group">
- 
- 
-                      <label>Remarks:</label>
-                      <input type="text" class="form-control" name="remarks" required="1">
- 
- 
-                  </div>
- 
- 
- 
-               		<div class="form-group">
- 
- 
-                  		<button class="btn btn-success" type="submit">Add FPN</button>
- 
- 
-               		</div>
-
- 
- 
-            		</form>
-            	</div>
-
-            	<div class="modal-footer">
- 
- 
-            		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
- 
- 
-         		</div>
-            	
-            </div>
- 
- 
-         
- 
- 
+        </table>
       </div>
- 
- 
+
+
+      <div id="addPOmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                  <h4 class="modal-title">Add PO</h4>
+              </div>
+            <div class="modal-body">
+
+                <form action="{{url_for('addpo')}}" method="POST">
+
+
+                  <div class="form-group">
+
+                      <label>Resource Name :</label>
+                      <input type="text" class="form-control" name="resource_name" required="1">
+
+
+                  </div>
+
+
+
+
+                  <div class="form-group">
+
+
+                      <label>Vendor :</label>
+                      <input type="text" class="form-control" name="vendor" required="1" >
+
+
+                  </div>
+
+
+                  <div class="form-group">
+
+
+                      <label>Month :</label>
+                      <input type="text" class="form-control" name="month" required="1" >
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>No of Days:</label>
+                      <input type="text" class="form-control" name="no_of_days" required="1" >
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>Leaves Taken:</label>
+                      <input type="text" class="form-control" name="leaves_taken" required="1">
+
+
+                  </div>
+
+
+                  <div class="form-group">
+
+
+                      <label>Billed Days:</label>
+                      <input type="text" class="form-control" name="biled_days" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>Billing Rate:</label>
+                      <input type="text" class="form-control" name="billing_rate" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>Billable Amount:</label>
+                      <input type="text" class="form-control" name="billable_amount" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>GST :</label>
+                      <input type="text" class="form-control" name="gst" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>Total:</label>
+                      <input type="text" class="form-control" name="total" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+
+                      <label>FPN Used:</label>
+                      <input type="text" class="form-control" name="" required="1">
+
+
+                  </div>
+
+                  <div class="form-group">
+
+                    <label>PORF:</label>
+                    <input type="text" class="form-control" name="porf" required="1">
+
+                  </div>
+
+                <div class="form-group">
+
+
+                      <label>Project:</label>
+                      <input type="text" class="form-control" name="project" required="1">
+
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Date Raised:</label>
+                    <input type="text" class="form-control" name="date_raised" required="1">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>PONO:</label>
+                    <input type="text" class="form-control" name="porf" required="1">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Invoice NO:</label>
+                    <input type="text" class="form-control" name="invoice_no" required="1">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Go Live Date:</label>
+                    <input type="text" class="form-control" name="golive_date" required="1">
+
+                </div>
+
+
+
+
+
+
+
+
+                  <div class="form-group">
+
+
+                      <button class="btn btn-success" type="submit">Add PO</button>
+
+
+                  </div>
+
+
+
+                </form>
+              </div>
+
+              <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+            </div>
+
+            </div>
+
+
+
+
+
+      </div>
+
+
    </div>
-   {% endfor %}
- 
- 
-</div>
- 
- 
- 
- 
- 
-        </div>
- 
+
+
+
+
+
     </div>
-
+  </div>
+</div>
 
 
 
