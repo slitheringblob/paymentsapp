@@ -37,26 +37,18 @@ def hello():
 @app.route('/dashboard',methods=['GET','POST'])
 @login_required
 def dashboard():
+    username = session.get("USERNAME")
+    print("Username:",username)
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("select SUM(billable_amount) from MS_PO_MASTER")
+    total_billable_amount = c.fetchall()
+    print("Sum of Billable Amount:",sum)
 
-	username = session.get("USERNAME")
-	print("Username:",username)
-
-
-	legend = 'Monthly Data'
-	labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
-	values = [10, 9, 8, 7, 6, 4, 7, 8]
-
-	conn = connect_db()
-	c = conn.cursor()
-
-	#c.execute("select SUM() from ")
-
-
-
-
-
-
-	return render_template("dashboard.html",values=values, labels=labels, legend=legend,username = username)
+    return render_template("dashboard.html",values=values, labels=labels, legend=legend,username = username)
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -332,13 +324,13 @@ def addpo():
 		c = conn.cursor()
 
 		resource_name = request.form["resource_name"]
-		po_vendor = request.form["po_vendor"]
+		vendor = request.form["vendor"]
 		month = request.form["month"]
-		noofdays = request.form["noofdays"]
-		leavestaken = request.form["leavestaken"]
-		billeddays = request.form["billeddays"]
-		billingrate = request.form["billingrate"]
-		billableamount = request.form["billableamount"]
+		noofdays = request.form["no_of_days"]
+		leavestaken = request.form["leaves_taken"]
+		billeddays = request.form["billed_days"]
+		billingrate = request.form["billing_rate"]
+		billableamount = request.form["billable_amount"]
 		gst = request.form["gst"]
 		total = request.form["total"]
 		fpn = request.form["fpn"]
@@ -350,7 +342,7 @@ def addpo():
 		golive_date = request.form["golive_date"]
 
 
-		c.execute("INSERT INTO MS_PO_MASTER(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+		c.execute("INSERT INTO MS_PO_MASTER(resource_name,vendor,month,no_of_days,leaves_taken,billed_days,billing_rate,billable_amount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
 
 	return redirect(url_for('po'))
 
