@@ -44,9 +44,9 @@ def dashboard():
     values = [10, 9, 8, 7, 6, 4, 7, 8]
     conn = connect_db()
     c = conn.cursor()
-    c.execute("select SUM(billable_amount) from MS_PO_MASTER")
-    total_billable_amount = c.fetchall()
-    print("Sum of Billable Amount:",sum)
+    c.execute("SELECT total(total) from MS_PO_MASTER")
+    total_billable_amount = c.fetchone()[0]
+    print("Sum of PO total column:",total_billable_amount)
 
     return render_template("dashboard.html",values=values, labels=labels, legend=legend,username = username)
 
@@ -77,14 +77,13 @@ def logout():
 @app.route('/employees',methods = ['GET','POST'])
 @login_required
 def employees():
-	conn = connect_db()
-	c = conn.cursor()
-	c.execute("select * from MS_EMP_MASTER")
-	rows = c.fetchall()
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("select * from MS_EMP_MASTER")
+    rows = c.fetchall()
+    username = session.get("USERNAME")
 
-
-
-	return render_template("employees.html", rows=rows, title="Employees")
+    return render_template("employees.html", rows=rows,username = username, title="Employees")
 
 
 
@@ -159,12 +158,12 @@ def deleteemployee(id):
 @app.route('/holidays',methods = ['GET','POST'])
 @login_required
 def holidays():
-	conn = connect_db()
-	c = conn.cursor()
-	c.execute("select * from MS_HOLIDAY_MASTER")
-	rows = c.fetchall()
-
-	return render_template("holidays.html", rows=rows, title="Holidays")
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("select * from MS_HOLIDAY_MASTER")
+    rows = c.fetchall()
+    username = session.get("USERNAME")
+    return render_template("holidays.html", rows=rows,username = username, title="Holidays")
 
 
 @app.route('/addholiday',methods = ['GET','POST'])
@@ -227,12 +226,12 @@ def deleteholiday(id):
 @app.route('/fpn',methods = ['GET','POST'])
 @login_required
 def fpn():
-	conn = connect_db()
-	c = conn.cursor()
-	c.execute("select * from MS_FPN_MASTER")
-	rows = c.fetchall()
-
-	return render_template("fpn.html", rows=rows , title="FPN")
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("select * from MS_FPN_MASTER")
+    rows = c.fetchall()
+    username = session.get("USERNAME")
+    return render_template("fpn.html", rows=rows ,username = username, title="FPN")
 
 
 @app.route('/addfpn',methods = ['GET','POST'])
@@ -306,45 +305,43 @@ def deletefpn(id):
 @login_required
 
 def po():
-	conn = connect_db()
-	c = conn.cursor()
-	c.execute("select * from MS_PO_MASTER")
-	rows = c.fetchall()
-	print(rows)
-
-	return render_template("po.html",rows=rows, title="PO")
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("select * from MS_PO_MASTER")
+    rows = c.fetchall()
+    print(rows)
+    username = session.get("USERNAME")
+    return render_template("po.html",rows=rows,username = username, title="PO")
 
 @app.route('/addpo',methods = ['GET','POST'])
 @login_required
 
 def addpo():
+    if request.method == "POST":
+        conn = connect_db()
+        c = conn.cursor()
 
-	if request.method == "POST":
-		conn = connect_db()
-		c = conn.cursor()
-
-		resource_name = request.form["resource_name"]
-		vendor = request.form["vendor"]
-		month = request.form["month"]
-		noofdays = request.form["no_of_days"]
-		leavestaken = request.form["leaves_taken"]
-		billeddays = request.form["billed_days"]
-		billingrate = request.form["billing_rate"]
-		billableamount = request.form["billable_amount"]
-		gst = request.form["gst"]
-		total = request.form["total"]
-		fpn = request.form["fpn"]
-		porf = request.form["porf"]
-		project = request.form["project"]
-		date_raised = request.form["date_raised"]
-		pono = request.form["pono"]
-		invoice_no = request.form["invoice_no"]
-		golive_date = request.form["golive_date"]
-
-
-		c.execute("INSERT INTO MS_PO_MASTER(resource_name,vendor,month,no_of_days,leaves_taken,billed_days,billing_rate,billable_amount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
-
-	return redirect(url_for('po'))
+        resource_name = request.form["resource_name"]
+        vendor = request.form["vendor"]
+        month = request.form["month"]
+        no_of_days = request.form["no_of_days"]
+        leaves_taken = request.form["leaves_taken"]
+        billed_days = request.form["billed_days"]
+        billing_rate = request.form["billing_rate"]
+        billable_amount = request.form["billable_amount"]
+        gst = request.form["gst"]
+        total = request.form["total"]
+        fpn = request.form["fpn"]
+        porf = request.form["porf"]
+        project = request.form["project"]
+        date_raised = request.form["date_raised"]
+        pono = request.form["pono"]
+        invoice_no = request.form["invoice_no"]
+        golive_date = request.form["golive_date"]
+        c.execute("INSERT INTO MS_PO_MASTER(resource_name,vendor,month,no_of_days,leaves_taken,billed_days,billing_rate,billable_amount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(resource_name,vendor,month,no_of_days,leaves_taken,billed_days,billing_rate,billable_amount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('po'))
 
 
 
