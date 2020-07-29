@@ -1,6 +1,8 @@
 from flask import Flask,render_template,redirect,url_for,request,session,flash
 from functools import wraps
 import sqlite3
+import os
+from flask_sqlalchemy import SQLAlchemy
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
 from forms import view_po_form,view_fpn_form
 from forms import update_po_search_form,update_employee_search_form,update_fpn_search_form
@@ -9,7 +11,8 @@ from forms import update_po_search_form,update_employee_search_form,update_fpn_s
 app=Flask(__name__)
 
 app.secret_key= "my precious"
-database = "C:/Users/jayde/Documents/GitHub/paymentsapp/db/vpt.db"
+database_filepath = "C:/Users/jayde/Documents/GitHub/paymentsapp/db/vpt.db"
+
 
 ################################login required decorator ####################################
 
@@ -37,16 +40,20 @@ def hello():
 @app.route('/dashboard',methods=['GET','POST'])
 @login_required
 def dashboard():
+    conn = connect_db()
+    c = conn.cursor()
     username = session.get("USERNAME")
     print("Username:",username)
     legend = 'Monthly Data'
     labels = ["January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"]
-    values = [10, 9, 8, 7, 6, 4, 7, 8]
-    conn = connect_db()
-    c = conn.cursor()
-    c.execute("SELECT total(total) from MS_PO_MASTER")
-    total_billable_amount = c.fetchone()[0]
-    print("Sum of PO total column:",total_billable_amount)
+    values = [10, 9, 8, 7, 6, 4, 7, 8,1,9,1,5]
+    for month in range(1,13):
+        print("Month:",month)
+        c.execute("SELECT total(total) from MS_PO_MASTER WHERE month=?",(month,))
+        total_billable_amount = c.fetchone()[0]
+        values[month-1] = total_billable_amount
+        print("Monthly Values:",values)
+        print("Sum of PO total column:",total_billable_amount)
 
     return render_template("dashboard.html",values=values, labels=labels, legend=legend,username = username)
 
@@ -190,20 +197,17 @@ def addholiday():
 @login_required
 
 def updateholiday():
+    if request.method == "POST":
+        conn = connect_db()
+        c = conn.cursor()
+        date = request.form["date"]
+        reason = request.form["reason"]
+        print("Date and Reason:",date,reason)
+        c.execute("UPDATE MS_HOLIDAY_MASTER SET date=?,reason=? WHERE date=?",(date,reason,date,))
+        conn.commit()
+        conn.close()
 
-	if request.method == "POST":
-
-		conn = connect_db()
-		c = conn.cursor()
-
-		date = request.form["date"]
-		reason = request.form["reason"]
-
-		c.execute("UPDATE MS_HOLIDAY_MASTER SET date=?,reason=? WHERE date=?",(date,reason,date,))
-		conn.commit()
-		conn.close()
-
-	return redirect(url_for('holidays'))
+    return redirect(url_for('holidays'))
 
 @app.route('/deleteholiday/<id>',methods=['GET','POST'])
 @login_required
@@ -212,7 +216,7 @@ def deleteholiday(id):
     conn = connect_db()
     c = conn.cursor()
 
-    print("thi is the rowID:",str(id))
+    print("this is the rowID:",str(id))
 
     c.execute("DELETE FROM MS_HOLIDAY_MASTER WHERE id=?",(id,))
     conn.commit()
@@ -350,34 +354,32 @@ def addpo():
 @login_required
 
 def updatepo():
-	if request.method =="POST":
+    if request.method =="POST":
+        conn = connect_db()
+        c = conn.cursor()
+        resource_name = request.form["resource_name"]
+        vendor = request.form["vendor"]
+        month = request.form["month"]
+        noofdays = request.form["no_of_days"]
+        leavestaken = request.form["leaves_taken"]
+        billeddays = request.form["billed_days"]
+        billingrate = request.form["billing_rate"]
+        billableamount = request.form["billable_amount"]
+        gst = request.form["gst"]
+        total = request.form["total"]
+        fpn = request.form["fpn"]
+        porf = request.form["porf"]
+        project = request.form["project"]
+        date_raised = request.form["date_raised"]
+        pono = request.form["pono"]
+        invoice_no = request.form["invoice_no"]
+        golive_date = request.form["golive_date"]
 
-		conn = connect_db()
-		c = conn.cursor()
+        c.execute("UPDATE MS_PO_MASTER SET resource_name=?,vendor=?,month=?,no_of_days=?,leaves_taken=?,billed_days=?,billing_rate=?,billable_amount=?,gst=?,total=?,fpn=?,porf=?,project=?,date_raised=?,pono=?,invoice_no=?,golive_date=?",(resource_name,vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
+        conn.commit()
+        conn.close()
 
-		resource_name = request.form["resource_name"]
-		po_vendor = request.form["po_vendor"]
-		month = request.form["month"]
-		noofdays = request.form["noofdays"]
-		leavestaken = request.form["leavestaken"]
-		billeddays = request.form["billeddays"]
-		billingrate = request.form["billingrate"]
-		billableamount = request.form["billableamount"]
-		gst = request.form["gst"]
-		total = request.form["total"]
-		fpn = request.form["fpn"]
-		porf = request.form["porf"]
-		project = request.form["project"]
-		date_raised = request.form["date_raised"]
-		pono = request.form["pono"]
-		invoice_no = request.form["invoice_no"]
-		golive_date = request.form["golive_date"]
-
-		c.execute("UPDATE MS_PO_MASTER SET resource_name=?,po_vendor=?,month=?,noofdays=?,leavestaken=?,billeddays=?,billingrate=?,billableamount=?,gst=?,total=?,fpn=?,porf=?,project=?,date_raised=?,pono=?,invoice_no=?,golive_date=?",(resource_name,po_vendor,month,noofdays,leavestaken,billeddays,billingrate,billableamount,gst,total,fpn,porf,project,date_raised,pono,invoice_no,golive_date,))
-		conn.commit()
-		conn.close()
-
-	return redirect(url_for('po'))
+    return redirect(url_for('po'))
 
 @app.route('/deletepo/<id>',methods=['GET','POST'])
 @login_required
@@ -403,7 +405,7 @@ def deletepo(id):
 
 
 def connect_db():
-	conn = sqlite3.connect(database)
+	conn = sqlite3.connect(database_filepath)
 	print("Connection Established")
 	print(sqlite3.version)
 	return conn
