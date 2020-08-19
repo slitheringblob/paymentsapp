@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="col-md-4">
+    <div class="alert alert-success" role="alert">
+        {{message_alert}}
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
+    <form action="/uploader" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="">Upload Timesheet</label>
+        <input type="file" class="form-control-file" name="input_file">
+        <br>
+        <button type="submit" class="btn btn-primary mb-2">Upload Timesheet</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-4"></div>
+</div>
+
+
+
+
+{% endblock %}

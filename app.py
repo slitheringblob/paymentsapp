@@ -1,8 +1,11 @@
-from flask import Flask,render_template,redirect,url_for,request,session,flash
+from flask import Flask,render_template,redirect,url_for,request,session,flash,send_file,send_from_directory,safe_join,abort
 from functools import wraps
 import sqlite3
 import os
+import datetime
+import subprocess
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
 from forms import view_po_form,view_fpn_form
 from forms import update_po_search_form,update_employee_search_form,update_fpn_search_form
@@ -12,6 +15,9 @@ app=Flask(__name__)
 
 app.secret_key= "my precious"
 database_filepath = "C:/Users/jayde/Documents/GitHub/paymentsapp/db/vpt.db"
+app.config['MAX_CONTENT_LENGTH'] = 1024*1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg','.png','.gif','.jpeg','.xls','.xlsx']
+UPLOAD_PATH = 'C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\uploads\\'
 
 
 ################################login required decorator ####################################
@@ -26,7 +32,7 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
-#############################################################################################p;i
+################################################################################################
 ##############################################    ROUTES    #################################
 
 @app.route('/')
@@ -36,7 +42,8 @@ def hello():
 	error = "Invalid route. Go to /login"
 	return render_template('login.html',error=error)
 
-
+##################################################################################################
+############################ Dashboard ###########################################################################################
 @app.route('/dashboard',methods=['GET','POST'])
 @login_required
 def dashboard():
@@ -57,6 +64,8 @@ def dashboard():
 
     return render_template("dashboard.html",values=values, labels=labels, legend=legend,username = username)
 
+########################################################################################################################
+################################## Login ###############################################################################
 @app.route('/login',methods=['GET','POST'])
 def login():
 	error = None
@@ -71,12 +80,48 @@ def login():
 
 	return render_template('login.html',error=error)
 
+########################################################################################################################
+################################## LogOut ###############################################################################
 @app.route('/logout')
 @login_required
 def logout():
 	session.pop('logged_in',None)
 	flash('You were just logged Out!')
 	return redirect(url_for('login'))
+########################################################################################################################
+################################## File Upload ###############################################################################
+################# functional route that will be hit ftom the from the template submit button ####################################
+@app.route('/upload',methods=['GET','POST'])
+@login_required
+def upload():
+    return render_template('uploadform.html')
+
+
+
+@app.route('/uploader',methods=['GET','POST'])
+@login_required
+def uploader():
+    if request.method == "POST":
+        f = request.files['input_file']
+        filename = secure_filename(f.filename)
+        if f.filename !='':
+            file_extension = os.path.splitext(filename)[1]
+            if file_extension not in app.config['UPLOAD_EXTENSIONS']:
+                message_alert = 'Upload Failed'
+                return render_template('uploadform.html',message_alert = message_alert)
+            else:
+                # generate the output path and command string that needs to be executed
+                global UPLOAD_PATH
+                UPLOAD_PATH = UPLOAD_PATH + datetime.datetime.now().strftime("%d%m%y%H%M")
+                os.makedirs(UPLOAD_PATH)
+                f.save(os.path.join(UPLOAD_PATH,filename))
+                message_alert = 'Successfully Uploaded'
+                return render_template('uploadform.html',message_alert=message_alert)
+        else:
+            message_alert = 'Upload Failed'
+            return render_template('uploadform.html',message_alert = message_alert)
+
+
 
 ############################################################### Employees New Code #####################################################################################################################################
 
