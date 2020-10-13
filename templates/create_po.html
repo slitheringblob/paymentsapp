@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Employee List</th>
+      <th scope="col">#</th>
+      <th scope="col">PO List</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>
+          <select id="emplist" multiple="multiple">
+            {% for emp in employee_list %}
+              <option>{{emp}}</option>
+            {% endfor %}
+          </select>
+        </td>
+
+        <td>
+          <button type="button" class="btn btn-info" id="btn1">>></button>
+          <br><br>
+          <button type="button" class="btn btn-info" id="btn2"><<</button>
+        </td>
+
+        <td>
+          <select id="polist" multiple="multiple">
+
+          </select>
+        </td>
+
+      </tr>
+  </tbody>
+</table>
+
+
+
+{% endblock %}

@@ -4,6 +4,7 @@ import sqlite3
 import os
 import datetime
 import subprocess
+import xlrd
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from forms import add_po_form,add_holiday_form,add_employee_form,add_fpn_form
@@ -115,8 +116,29 @@ def uploader():
                 UPLOAD_PATH = UPLOAD_PATH + datetime.datetime.now().strftime("%d%m%y%H%M")
                 os.makedirs(UPLOAD_PATH)
                 f.save(os.path.join(UPLOAD_PATH,filename))
+
+                ################################# Parsing the uploaded file to get no of leaves and present days ##############################################################
+                fqfp = os.path.join(UPLOAD_PATH,filename) #fully qualified file name
+                wb = xlrd.open_workbook(filename=fqfp) #open the workbook
+                sheet = wb.sheet_by_index(0) # extract sheet
+                day_status = []
+                leave_dates = []
+                py_dates = []
+                present_counter = 0
+                for i in range(sheet.nrows):
+                    day_status.append(sheet.cell_value(i,6))
+                    if day_status[i] == 'Present' or day_status[i] == 'present':
+                        present_counter += 1
+                    if day_status[i] == 'Leave' or day_status[i] == 'leave':
+                        raw_date = sheet.cell_value(i,3)
+                        converted_date = xlrd.xldate_as_tuple(raw_date,wb.datemode)
+                        print("Converted Date:",converted_date)
+                        actual_date = datetime.datetime(*converted_date).strftime("%d/%m/%y")
+                        print("Actual Date:",actual_date)
+                        leave_dates.append(actual_date)
+
                 message_alert = 'Successfully Uploaded'
-                return render_template('uploadform.html',message_alert=message_alert)
+                return render_template('uploadform.html',message_alert=message_alert,leave_dates = leave_dates , present_counter = present_counter)
         else:
             message_alert = 'Upload Failed'
             return render_template('uploadform.html',message_alert = message_alert)
@@ -287,51 +309,57 @@ def fpn():
 @login_required
 def addfpn():
 
-	if request.method == "POST":
+    if request.method == "POST":
+        conn = connect_db()
+        c = conn.cursor()
 
-		conn = connect_db()
-		c = conn.cursor()
+        fpn = request.form["fpn"]
+        fpn_description = request.form["fpn_description"]
+        resource_duration = request.form["resource_duration"]
+        amount = request.form["amount"]
+        vendor = request.form["vendor"]
+        opening_balance = request.form["opening_balance"]
+        amount_utilized = request.form["amount_utilized"]
+        remaining_amount = request.form["remaining_amount"]
+        go_live = request.form["go_live"]
+        remarks = request.form["remarks"]
+        project = request.form["project"]
 
-		fpn = request.form["fpn"]
-		fpn_description = request.form["fpn_description"]
-		resource_duration = request.form["resource_duration"]
-		amount = request.form["amount"]
-		vendor = request.form["vendor"]
-		opening_balance = request.form["opening_balance"]
-		amount_utilized = request.form["amount_utilized"]
-		remaining_amount = request.form["remaining_amount"]
-		go_live = request.form["go_live"]
-		remarks = request.form["remarks"]
+        print("project:",project)
 
-
-		c.execute("INSERT INTO MS_FPN_MASTER(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks) VALUES(?,?,?,?,?,?,?,?,?,?)",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,))
-		conn.commit()
-		conn.close()
-	return redirect(url_for('fpn'))
+        c.execute("INSERT INTO MS_FPN_MASTER(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,project) VALUES(?,?,?,?,?,?,?,?,?,?,?)",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,project,))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('fpn'))
 
 @app.route('/updatefpn',methods = ['GET','POST'])
 @login_required
 
 def updatefpn():
 
-	if request.method == "POST":
-		conn = connect_db()
-		c = conn.cursor()
+    if request.method == "POST":
+        conn = connect_db()
+        c = conn.cursor()
 
-		fpn = request.form["fpn"]
-		fpn_description = request.form["fpn_description"]
-		resource_duration = request.form["resource_duration"]
-		amount = request.form["amount"]
-		vendor = request.form["vendor"]
-		opening_balance = request.form["opening_balance"]
-		amount_utilized = request.form["amount_utilized"]
-		remaining_amount = request.form["remaining_amount"]
-		go_live = request.form["go_live"]
-		remarks = request.form["remarks"]
-		c.execute("UPDATE MS_FPN_MASTER SET fpn=?,fpn_description=?,resource_duration=?,amount=?,vendor=?,opening_balance=?,amount_utilized=?,remaining_amount=?,go_live=?,remarks=? WHERE fpn=?",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,fpn,))
-		conn.commit()
-		conn.close()
-	return redirect(url_for('fpn'))
+        fpn = request.form["fpn"]
+        fpn_description = request.form["fpn_description"]
+        resource_duration = request.form["resource_duration"]
+        amount = request.form["amount"]
+        vendor = request.form["vendor"]
+        opening_balance = request.form["opening_balance"]
+        amount_utilized = request.form["amount_utilized"]
+        remaining_amount = request.form["remaining_amount"]
+        go_live = request.form["go_live"]
+        remarks = request.form["remarks"]
+        project = request.form["project"]
+
+        #print("Updated Project:",project)
+        print("UPDATE MS_FPN_MASTER SET fpn="+fpn+" fpn_description="+fpn_description+" resource_duration="+resource_duration+" project="+project)
+        c.execute("UPDATE MS_FPN_MASTER SET fpn=?,fpn_description=?,resource_duration=?,amount=?,vendor=?,opening_balance=?,amount_utilized=?,remaining_amount=?,go_live=?,remarks=?,project=? WHERE fpn=?",(fpn,fpn_description,resource_duration,amount,vendor,opening_balance,amount_utilized,remaining_amount,go_live,remarks,project,fpn,))
+        print("No of rows affected: ",c.rowcount)
+        conn.commit()
+        conn.close()
+    return redirect(url_for('fpn'))
 
 @app.route('/deletefpn/<id>',methods=['GET','POST'])
 @login_required
@@ -442,7 +470,20 @@ def deletepo(id):
     return redirect(url_for('po'))
 
 
+@app.route('/createpo',methods=['GET','POST'])
+@login_required
 
+def createpo():
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("SELECT emp_name from MS_EMP_MASTER")
+    employee_list_raw = c.fetchall()
+    employee_list=[]
+
+    for employee in employee_list_raw:
+        employee_list.append(employee[0])
+
+    return render_template(("create_po.html"),employee_list = employee_list)
 
 
 

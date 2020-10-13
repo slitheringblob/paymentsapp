@@ -3,14 +3,16 @@
 {% block content %}
 
 <div class="container">
-  <div class="col-md-4">
-    <div class="alert alert-success" role="alert">
-        {{message_alert}}
+  <div class="row">
+  <div class="col-md-6">
+    <div class="alert alert-info" role="alert">
+        {{ message_alert }}
+
+        <p>Leave Dates: {{leave_dates}}</p>
+        <br>
+        <p>You were present for {{present_counter}} days.</p>
     </div>
-
-  </div>
-
-  <div class="col-md-4">
+    <br>
     <form action="/uploader" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="">Upload Timesheet</label>
@@ -19,11 +21,20 @@
         <button type="submit" class="btn btn-primary mb-2">Upload Timesheet</button>
       </div>
     </form>
+
   </div>
 
-  <div class="col-md-4"></div>
-</div>
+  <div class="col-md-6">
 
+  </div>
+
+
+</div>
+<div class="row">
+
+
+</div>
+</div>
 
 
 
