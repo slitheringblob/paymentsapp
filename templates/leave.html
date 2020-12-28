@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="col-md-12">
+      <div class="jumbotron p-3">
+        <h3><b> Leaves </b>
+          <button class="btn btn-success" data-toggle="modal" data-target = "#addLeave"> Add Leave</button>
+          
+        </h3>
+
+        <table class="table table-bordered table-hover table-dark">
+          <tr>
+            <th align="center">Name</th>
+            <th align="center">Leave Date</th>
+            <th align="center">Reason</th>
+
+          </tr>
+
+          {% for row in leave_details %}
+          <tr>
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            
+            <!--
+            <td>
+              <a href="/update/{{row[0]}}" class="btn btn-warning" data-toggle="modal" data-target="#updatePOmodal{{row[0]}}"> Update </a>
+              <a href="/deletepo/{{row[0]}}" class="btn btn-danger" onclick="return confirm('Are you Sure?')"> Delete </a>
+
+            </td>
+            -->          
+          </tr>
+      </div>
+   </div>
+
+
+{% endfor %}
+        </table>
+      </div>
+
+
+      <div id="addLeave" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title">Update Leave</h4>
+              </div>
+              <div class="modal-body">
+               <form action="{{url_for('addleave')}}" method="POST">
+                 <div class="form-group">
+                      <label>Employee ID :</label>
+                      <input type="text" class="form-control" name="resource_id" required="1">
+                  </div>
+
+                  <div class="form-group">
+                      <label>Employee Name :</label>
+                      <select  class="form-control" name="vendor" required="1" >
+                        {% for emp in employee_list %}
+                        <option>{{emp[0]}}</option>
+                        {% endfor %}
+                      </select>
+                 </div>
+
+
+                <div class="form-group">
+                    <label>Leave Date:</label>
+                    <input type="date" class="form-control" name="leave_date" required="1">
+                </div>
+
+                <div class="form-group">
+
+                    <label>Reason:</label>
+                    <input type="text" class="form-control" name="reason" required="1"/>
+
+                </div>
+
+
+                 <div class="form-group">
+                      <button class="btn btn-success" type="submit">Add Leave</button>
+                 </div>
+
+               </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+             </div>
+
+            </div>
+         </div>
+        </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
