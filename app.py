@@ -15,11 +15,13 @@ from forms import update_po_search_form,update_employee_search_form,update_fpn_s
 app=Flask(__name__)
 
 app.secret_key= "my precious"
-database_filepath = "C:/Users/jayde/Documents/GitHub/paymentsapp/db/vpt.db"
+
+
+database_filepath = "D:/WFH/JaydeepPOC/paymentsapp-master/db/vpt.db"
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg','.png','.gif','.jpeg','.xls','.xlsx']
-UPLOAD_PATH = 'C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\uploads\\'
-
+#UPLOAD_PATH = 'C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\uploads\\'
+UPLOAD_PATH = 'D:\\WFH\\JaydeepPOC\\paymentsapp-master\\uploads\\'
 
 ################################login required decorator ####################################
 
@@ -105,6 +107,9 @@ def uploader():
     if request.method == "POST":
         f = request.files['input_file']
         filename = secure_filename(f.filename)
+        conn = connect_db()
+        c = conn.cursor()
+        print("Connected to database from uploader")
         if f.filename !='':
             file_extension = os.path.splitext(filename)[1]
             if file_extension not in app.config['UPLOAD_EXTENSIONS']:
@@ -123,7 +128,7 @@ def uploader():
                 sheet = wb.sheet_by_index(0) # extract sheet
                 day_status = []
                 leave_dates = []
-                py_dates = []
+               # py_dates = []
                 present_counter = 0
                 for i in range(sheet.nrows):
                     day_status.append(sheet.cell_value(i,6))
@@ -136,12 +141,64 @@ def uploader():
                         actual_date = datetime.datetime(*converted_date).strftime("%d/%m/%y")
                         print("Actual Date:",actual_date)
                         leave_dates.append(actual_date)
+                        em_code = sheet.cell_value(i,1)
+                        em_name = sheet.cell_value(i,2)
+                        reason = sheet.cell_value(i,7)
+                        c.execute("INSERT INTO MS_LEAVE_MASTER (emp_code,emp_name,date,reason) values(?,?,?,?) ",(em_code,em_name,actual_date,reason,))
+                        conn.commit()
+                        print("values inserted in leaves table")
+
+
 
                 message_alert = 'Successfully Uploaded'
+                conn.close()
                 return render_template('uploadform.html',message_alert=message_alert,leave_dates = leave_dates , present_counter = present_counter)
         else:
             message_alert = 'Upload Failed'
+            conn.close()
             return render_template('uploadform.html',message_alert = message_alert)
+############## added by shivangi to update the MS_LEAVE_MASTER table ##################################
+
+@app.route('/leave',methods=['GET','POST'])
+@login_required
+def leave():
+    conn = connect_db()
+    c = conn.cursor()
+    c.execute("SELECT emp_name from MS_EMP_MASTER")
+    emp_names = c.fetchall()
+    employee_list=[]
+
+    for employee in emp_names:
+        employee_list.append(employee)
+    print(employee_list)
+    c.execute("SELECT emp_name,date,reason from MS_LEAVE_MASTER")
+    leave_details = c.fetchall()
+    leave_list=[]
+
+    for data in leave_details:
+        leave_list.append(data)
+    conn.close()
+    return render_template('leave.html',employee_list=employee_list,leave_details=leave_details)
+
+
+@app.route('/addleave',methods = ['GET','POST'])
+@login_required
+def addleave():
+
+    if request.method == "POST":
+        conn = connect_db()
+        c = conn.cursor()
+
+        id = request.form["resource_id"]
+        emp_name = request.form["vendor"]
+        leave_date = request.form["leave_date"]
+        leave_reason = request.form["reason"]
+
+        c.execute("INSERT INTO MS_LEAVE_MASTER(emp_code,emp_name,date,reason) VALUES(?,?,?,?)",(id,emp_name,leave_date,leave_reason,))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('leave'))
+
 
 
 
@@ -476,16 +533,20 @@ def deletepo(id):
 def createpo():
     conn = connect_db()
     c = conn.cursor()
-    c.execute("SELECT emp_name from MS_EMP_MASTER")
+    c.execute("SELECT emp_code,emp_name,rate from MS_EMP_MASTER")
     employee_list_raw = c.fetchall()
+    print("Shivangi")
+    print(employee_list_raw)
     employee_list=[]
 
     for employee in employee_list_raw:
-        employee_list.append(employee[0])
+        employee_list.append(employee)
+
+
+    #added by Shivangi to fetch rates of Employees
+
 
     return render_template(("create_po.html"),employee_list = employee_list)
-
-
 
 ####################################### END ROUTES ##########################################################################
 
