@@ -17,11 +17,11 @@ app=Flask(__name__)
 app.secret_key= "my precious"
 
 
-database_filepath = "D:/WFH/JaydeepPOC/paymentsapp-master/db/vpt.db"
+database_filepath = "C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\db\\vpt.db"
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg','.png','.gif','.jpeg','.xls','.xlsx']
-#UPLOAD_PATH = 'C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\uploads\\'
-UPLOAD_PATH = 'D:\\WFH\\JaydeepPOC\\paymentsapp-master\\uploads\\'
+UPLOAD_PATH = 'C:\\Users\\jayde\\Documents\\GitHub\\paymentsapp\\uploads\\'
+#UPLOAD_PATH = 'D:\\WFH\\JaydeepPOC\\paymentsapp-master\\uploads\\'
 
 ################################login required decorator ####################################
 
